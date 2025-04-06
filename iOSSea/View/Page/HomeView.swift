@@ -23,7 +23,6 @@ struct HomeView: View {
             }
         }
         .onAppear {
-            //For testing
             Task {
                 do {
                     let timeline : GetRecentResponse = try await PinkSeaClient.shared.query(GetRecentRequest(since: nil, limit: nil))
