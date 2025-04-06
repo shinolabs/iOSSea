@@ -26,9 +26,7 @@ struct HomeView: View {
             //For testing
             Task {
                 do {
-                    let timeline : GetRecentResponse = try await PinkSeaClient.shared.query(
-                        nsid: "com.shinolabs.pinksea.getRecent",
-                        params: [])
+                    let timeline : GetRecentResponse = try await PinkSeaClient.shared.query(GetRecentRequest(since: nil, limit: nil))
                     
                     viewModel.posts = timeline.oekaki
                 } catch let error as GenericClientError {

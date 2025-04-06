@@ -16,11 +16,12 @@ final class PinkSeaClient {
         
     }
     
-    func query<T: Decodable>(
-        nsid: String,
-        params: [URLQueryItem]
-    ) async throws -> T {
-        guard let finalUrl = URL(string: nsid, relativeTo: baseUrl)?.appending(queryItems: params) else {
+    func query<TRequest: XrpcInvokable, TResponse: Decodable>(
+        _ data: TRequest
+    ) async throws -> TResponse {
+        let params = try data.toQueryItems()
+        
+        guard let finalUrl = URL(string: data.nsid, relativeTo: baseUrl)?.appending(queryItems: params) else {
             throw EndpointError(message: "Not a valid URL")
         }
         
@@ -39,6 +40,6 @@ final class PinkSeaClient {
             }
         }
         
-        return try JSONDecoder().decode(T.self, from: data)
+        return try JSONDecoder().decode(TResponse.self, from: data)
     }
 }
