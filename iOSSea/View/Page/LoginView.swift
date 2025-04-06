@@ -12,6 +12,8 @@ struct LoginView: View {
     @State var loggingIn : Bool = false
     @State var didError : Bool = false
     @State var errorMessage : String = ""
+    @State var oauthNeedLogin : Bool = false
+    @State var oauthPage : URL = URL(string: "https://google.com")!
     var body: some View {
         VStack {
             Text("Login to start creating!")
@@ -29,7 +31,10 @@ struct LoginView: View {
                             BeginLoginFlowRequest(handle: viewModel.handle, password: viewModel.password, redirectUrl: "pinksea://callback")
                         )
                         
-                        print("Redirecting to \(response.redirect)")
+                        if !response.redirect.starts(with: "pinksea") {
+                            oauthNeedLogin = true
+                            oauthPage = URL(string: response.redirect)!
+                        }
                     } catch let error as XrpcError {
                         loggingIn = false
                         didError = true
@@ -54,6 +59,9 @@ struct LoginView: View {
                 }
             } message: {
                 Text(errorMessage)
+            }
+            .sheet(isPresented: $oauthNeedLogin) {
+                SafariView(url: oauthPage)
             }
         }
         .padding()
