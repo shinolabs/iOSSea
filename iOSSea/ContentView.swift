@@ -25,7 +25,7 @@ struct ContentView: View {
                         .toolbarBackground(.visible, for: .tabBar)
                 }
                 Tab("", systemImage: "person.crop.circle.fill", value: .settings) {
-                    SettingsView()
+                    LoginView()
                         .toolbarBackground(Color(UIColor(named: "Foreground")!), for: .tabBar)
                         .toolbarBackground(.visible, for: .tabBar)
                 }

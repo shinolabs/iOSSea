@@ -61,7 +61,7 @@ struct LoginView: View {
                 Text(errorMessage)
             }
             .sheet(isPresented: $oauthNeedLogin) {
-                SafariView(url: oauthPage)
+                SafariView(url: $oauthPage)
             }
         }
         .padding()

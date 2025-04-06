@@ -12,6 +12,9 @@ struct iOSSeaApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .onOpenURL { url in
+                    print("Got URL \(url)")
+                }
         }
     }
 }
