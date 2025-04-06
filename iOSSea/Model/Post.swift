@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Post: Decodable {
+struct Post: Codable {
     var tags: [String]
     var creationTime: String
     var author: Author
@@ -39,7 +39,7 @@ struct Post: Decodable {
     }
 }
 
-struct Author: Decodable {
+struct Author: Codable {
     var did: String
     var handle: String
 }

@@ -19,14 +19,24 @@ struct HomeView: View {
                         PostView(post: post).padding(.top, 0)
                     }
                 }
-                
+                ProgressView()
             }
         }
         .onAppear {
             //For testing
-            viewModel.posts = posts
+            Task {
+                do {
+                    let timeline : GetRecentResponse = try await PinkSeaClient.shared.query(
+                        nsid: "com.shinolabs.pinksea.getRecent",
+                        params: [])
+                    
+                    viewModel.posts = timeline.oekaki
+                } catch let error as GenericClientError {
+                    print(error.message)
+                }
+                
+            }
         }
-
     }
 }
 
