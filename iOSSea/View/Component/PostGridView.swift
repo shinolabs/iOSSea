@@ -30,7 +30,7 @@ struct PostGridView: View {
                     }
                 }
             }
-        }.frame(width: .infinity)
+        }
         .overlay {
             GeometryReader {geometry in
                 VStack {}.onChange(of: geometry.size.width) {old, new in
