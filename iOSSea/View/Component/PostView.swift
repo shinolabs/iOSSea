@@ -38,13 +38,18 @@ struct PostView: View {
             VStack {
                 //Profile
                 HStack {
-                    Image("apple")
-                        .resizable()
-                        .frame(width: 60, height: 60)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                    NavigationLink(destination: ProfileView(did: post.author.did)) {
+                        Image("apple")
+                            .resizable()
+                            .frame(width: 60, height: 60)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                    }
+                    
                     VStack(alignment: .leading) {
-                        Text("@\(post.author.handle)")
-                            .font(.title3.bold())
+                        NavigationLink(destination: ProfileView(did: post.author.did)) {
+                            Text("@\(post.author.handle)")
+                                .font(.title3.bold())
+                        }
                         Text(post.getFormattedDate() ?? "")
                             .font(.subheadline)
                     }
@@ -90,14 +95,16 @@ struct PostView: View {
 }
 
 #Preview {
-    PostView(post: Post(
-        tags: ["hanyuu", "higurashi_no_naku_koro_ni"],
-        creationTime: "2025-01-19T21:34:21.432307+00:00",
-        author: Author(did: "", handle: "pref.ata.moe"),
-        image: "https://harbor.pinksea.art/did:plc:vrk3nc7pk3b5kuk6y5dewnuw/bafkreih7ssj5c5nqvdqwmlvs774c6yilz67czbxcrnlyhht2slm7lb4rby",
-        alt: "hanyuu in the windows xp wallpaper",
-        nsfw: false,
-        cid: "",
-        at: "")
-    )
+    NavigationStack {
+        PostView(post: Post(
+            tags: ["hanyuu", "higurashi_no_naku_koro_ni"],
+            creationTime: "2025-01-19T21:34:21.432307+00:00",
+            author: Author(did: "did:plc:vrk3nc7pk3b5kuk6y5dewnuw", handle: "pref.ata.moe"),
+            image: "https://harbor.pinksea.art/did:plc:vrk3nc7pk3b5kuk6y5dewnuw/bafkreih7ssj5c5nqvdqwmlvs774c6yilz67czbxcrnlyhht2slm7lb4rby",
+            alt: "hanyuu in the windows xp wallpaper",
+            nsfw: false,
+            cid: "",
+            at: "")
+        )
+    }
 }

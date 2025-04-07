@@ -8,25 +8,35 @@
 import SwiftUI
 
 struct PostGridView: View {
-    let posts: [Post]
     @State var width: CGFloat = 0
+    
+    let posts: [Post]
     let maxWidth: CGFloat
+    let reply: Bool
+    
     public var body: some View {
         ScrollView {
             WrappingHStack {
                 ForEach(posts, id: \.cid) { post in
-                    MiniPostView(post: post).frame(width: width / (ceil(width/maxWidth)))
+                    NavigationLink(destination: {
+                        if(reply) {
+                            PostFromReplyView(rkey: post.at.components(separatedBy: "/").last ?? "", did: post.author.did)
+                            
+                        } else {
+                            PostPageView(post: post)
+                        }
+                    }) {
+                        MiniPostView(post: post).frame(width: width / (ceil(width/maxWidth)))
+                    }
                 }
             }
         }.frame(width: .infinity)
         .overlay {
             GeometryReader {geometry in
                 VStack {}.onChange(of: geometry.size.width) {old, new in
-                    print(new)
                     width = new
                 }
                 .onAppear {
-                    print(geometry.size.width)
                     width = geometry.size.width
                 }
             }
@@ -35,5 +45,5 @@ struct PostGridView: View {
 }
 
 #Preview {
-    PostGridView(posts: posts, maxWidth: 160)
+    PostGridView(posts: posts, maxWidth: 160, reply: false)
 }

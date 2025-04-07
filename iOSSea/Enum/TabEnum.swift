@@ -15,9 +15,9 @@ enum TabEnum: Identifiable {
             case .home:
             return "Recent"
         case .profile:
-            return "Profile"
+            return "Search"
         case .settings:
-            return "Settings"
+            return "Profile"
         }
     }
 }

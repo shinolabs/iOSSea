@@ -15,7 +15,7 @@ struct ProfileView: View {
     @StateObject var viewModel = ProfileViewModel()
     @State var selection: Selection = .posts
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             //Profile
             HStack {
                 //Profile picture - not implemented yet
@@ -51,8 +51,8 @@ struct ProfileView: View {
                     }
                 }
                 Spacer()
-            }
-            Color(UIColor(named: "Foreground")!).frame(height: 1)
+            }.padding(.top, 10)
+            Color(UIColor(named: "Foreground")!).frame(height: 1).padding(.vertical, 10)
             HStack {
                 Spacer()
                 Button(action: {selection = .posts}) {
@@ -65,10 +65,11 @@ struct ProfileView: View {
                 }
                 Spacer()
             }
-            Color(UIColor(named: "Foreground")!).frame(height: 1)
+            Color(UIColor(named: "Foreground")!).frame(height: 1).padding(.top, 10)
             PostGridView(
                 posts: selection == .replies ? viewModel.replies : viewModel.posts,
-                maxWidth: selection == .replies ? 500 : 160
+                maxWidth: selection == .replies ? 500 : 160,
+                reply: selection == .replies
             )
             Spacer()
         }
@@ -97,6 +98,11 @@ struct ProfileView: View {
                 }
             }
         }
+        .navigationTitle("Profile")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbarVisibility(.visible, for: .automatic)
+        .toolbarBackgroundVisibility(.visible, for: .automatic)
+        .toolbarBackground(Color(UIColor(named: "Foreground")!), for: .automatic)
     }
 }
 

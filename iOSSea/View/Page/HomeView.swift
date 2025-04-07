@@ -16,7 +16,10 @@ struct HomeView: View {
             ScrollView {
                 VStack(spacing: 0) {
                     ForEach(viewModel.posts, id: \.image) { post in
-                        PostView(post: post).padding(.top, 0)
+                        NavigationLink(destination: PostPageView(post: post)) {
+                            PostView(post: post).padding(.top, 0)
+                        }
+                        
                     }
                 }
                 ProgressView()

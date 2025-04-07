@@ -36,13 +36,17 @@ struct CommentView: View {
             VStack(alignment: .leading) {
                     //Info
                 HStack() {
-                    Image("apple")
-                        .resizable()
-                        .frame(width: 30, height: 30)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                    Text("@\(post.author.handle)")
-                        .bold()
-                        .font(.system(size: 11, weight: .bold, design: .default))
+                    NavigationLink(destination: ProfileView(did: post.author.did)) {
+                        Image("apple")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                    }
+                    NavigationLink(destination: ProfileView(did: post.author.did)) {
+                        Text("@\(post.author.handle)")
+                            .bold()
+                            .font(.system(size: 11, weight: .bold, design: .default))
+                    }
                     Spacer()
                     Text(post.getFormattedDate() ?? "")
                         .font(.system(size: 11, weight: .medium, design: .default))
