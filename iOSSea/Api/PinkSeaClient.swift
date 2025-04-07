@@ -25,7 +25,14 @@ final class PinkSeaClient {
             throw EndpointError(message: "Not a valid URL")
         }
         
-        let (data, response) = try await URLSession.shared.data(from: finalUrl)
+        var request = URLRequest(url: finalUrl)
+        request.httpMethod = "GET"
+
+        if let token = AuthenticationManager.shared.getToken() {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+        
+        let (data, response) = try await URLSession.shared.data(for: request)
         
         guard let httpResponse = response as? HTTPURLResponse else {
             throw GenericClientError(message: "The resulting response is not a URL response")
@@ -55,6 +62,11 @@ final class PinkSeaClient {
         var request = URLRequest(url: finalUrl)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        if let token = AuthenticationManager.shared.getToken() {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+        
         request.httpBody = try JSONEncoder().encode(data)
         
         let (data, response) = try await URLSession.shared.data(for: request)

@@ -13,7 +13,17 @@ struct iOSSeaApp: App {
         WindowGroup {
             ContentView()
                 .onOpenURL { url in
-                    print("Got URL \(url)")
+                    guard let host = url.host() else {
+                        return
+                    }
+                    
+                    if host == "callback" {
+                        let code = url.query()!.replacing("code=", with: "")
+                        Task {
+                            await AuthenticationManager.shared.setToken(token: code)
+                            print("Logged in with token \(code)")
+                        }
+                    }
                 }
         }
     }

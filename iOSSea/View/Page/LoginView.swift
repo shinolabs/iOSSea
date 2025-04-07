@@ -34,6 +34,13 @@ struct LoginView: View {
                         if !response.redirect.starts(with: "pinksea") {
                             oauthNeedLogin = true
                             oauthPage = URL(string: response.redirect)!
+                        } else {
+                            let code = response.redirect.split(separator: "code=")
+                                .last!
+                            Task {
+                                await AuthenticationManager.shared.setToken(token: String(code))
+                            }
+                            
                         }
                     } catch let error as XrpcError {
                         loggingIn = false
@@ -62,6 +69,12 @@ struct LoginView: View {
             }
             .sheet(isPresented: $oauthNeedLogin) {
                 SafariView(url: $oauthPage)
+            }
+            .onReceive(AuthenticationManager.shared.eventSubject) { event in
+                switch event {
+                case .loggedIn:
+                    oauthNeedLogin = false
+                }
             }
         }
         .padding()
