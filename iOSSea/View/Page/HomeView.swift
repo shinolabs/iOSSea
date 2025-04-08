@@ -13,16 +13,21 @@ struct HomeView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            ScrollView {
-                VStack(spacing: 0) {
-                    ForEach(viewModel.posts, id: \.image) { post in
-                        NavigationLink(destination: PostPageView(post: post)) {
-                            PostView(post: post).padding(.top, 0)
+            GeometryReader { geometry in
+                ScrollView {
+                    VStack(spacing: 0) {
+                        ForEach(viewModel.posts, id: \.image) { post in
+                            NavigationLink(destination: PostPageView(post: post)) {
+                                PostView(post: post).padding(.top, 0)
+                            }
                         }
-                        
                     }
+                    VStack {
+                        ProgressView()
+                    }
+                    .frame(minHeight: viewModel.posts.count == 0 ? geometry.size.height : 200)
+                    .frame(maxWidth: .infinity)
                 }
-                ProgressView()
             }
         }
         .onAppear {
