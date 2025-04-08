@@ -10,17 +10,18 @@ import SwiftUI
 struct CommentView: View {
     let post: Post
     let last: Bool
-    @State private var size: CGFloat = 0
+    @State private var height: CGFloat = 0
+    @State private var width: CGFloat = 0
     var body: some View {
         HStack(alignment: .top, spacing: 0) {
             //Timeline
             ZStack(alignment: .trailing) {
                 VStack(spacing: 0) {
                     Color(UIColor(named: "Foreground")!).frame(width: 3)
-                        .frame(height: size/2)
+                        .frame(height: height/2)
                     if(!last){
                         Color(UIColor(named: "Foreground")!).frame(width: 3)
-                            .frame(height: size/2)
+                            .frame(height: height/2)
                     } else {
                         Spacer()
                     }
@@ -29,7 +30,7 @@ struct CommentView: View {
                     .frame(width: 16.5, height: 3, alignment: .trailing)
                 
             }
-            .frame(width: 30, height: size)
+            .frame(width: 30, height: height)
             .fixedSize()
             
             //Body
@@ -58,7 +59,12 @@ struct CommentView: View {
                 AsyncImage(url: post.getUrl()) { phase in
                     switch phase {
                     case .empty:
-                        ProgressView()
+                        VStack {
+                            ProgressView()
+                        }
+                        .frame(width: width)
+                        .frame(height: width/3)
+                        
                     case .success(let image):
                         image
                             .resizable()
@@ -82,7 +88,12 @@ struct CommentView: View {
                 ZStack {
                     GeometryReader { geometry in
                         VStack {}.onChange(of: geometry.size.height) {old, new in
-                            size = new
+                            height = new
+                        }.onChange(of: geometry.size.width) {old, new in
+                            width = new
+                        }.onAppear {
+                            height = geometry.size.height
+                            width = geometry.size.width
                         }
                     }
                     HStack(spacing: 0) {

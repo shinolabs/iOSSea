@@ -10,13 +10,17 @@ import SwiftUI
 struct PostView: View {
     let post: Post
     @State private var image: Image? = nil
+    @State private var width: CGFloat = 0
     var body: some View {
         VStack(spacing: 0) {
             //Image
             AsyncImage(url: post.getUrl()) { phase in
                 switch phase {
                 case .empty:
-                    ProgressView()
+                    VStack {
+                        ProgressView()
+                    }.frame(height: width)
+                    
                 case .success(let image):
                     image
                         .resizable()
@@ -82,14 +86,25 @@ struct PostView: View {
             )
         }
         .overlay(
-            VStack(spacing: 0) {
-                HStack(spacing: 0) {
-                    Color(UIColor(named: "Foreground")!).frame(width: 3) // Left
-                    Spacer()
-                    Color(UIColor(named: "Foreground")!).frame(width: 3) // Right
+            ZStack {
+                GeometryReader { geometry in
+                    VStack {}.onAppear {
+                        width = geometry.size.width
+                    }.onChange(of: geometry.size.width) { old, new in
+                        width = new
+                    }
+                    
                 }
-                Color(UIColor(named: "Foreground")!).frame(height: 3) // Bottom
+                VStack(spacing: 0) {
+                    HStack(spacing: 0) {
+                        Color(UIColor(named: "Foreground")!).frame(width: 3) // Left
+                        Spacer()
+                        Color(UIColor(named: "Foreground")!).frame(width: 3) // Right
+                    }
+                    Color(UIColor(named: "Foreground")!).frame(height: 3) // Bottom
+                }
             }
+            
         )
     }
 }
