@@ -38,18 +38,24 @@ struct ContentView: View {
                 }
                 Tab("", systemImage: "person.crop.circle.fill", value: 2) {
                     NavigationStack{
-                        if sharedAuthStateObject.token == nil || sharedAuthStateObject.did == nil {
-                            LoginView()
-                                .navigationTitle("Log in")
-                                .toolbarVisibility(.visible)
-                                .toolbarBackground(Color(UIColor(named: "Foreground")!), for: .automatic)
-                                .toolbarBackground(.visible, for: .automatic)
-                        } else {
-                            ProfileView(did: sharedAuthStateObject.did!)
-                                .navigationTitle("Profile")
-                                .toolbarVisibility(.visible)
-                                .toolbarBackground(Color(UIColor(named: "Foreground")!), for: .automatic)
-                                .toolbarBackground(.visible, for: .automatic)
+                        let notLoggedIn = sharedAuthStateObject.token == nil || sharedAuthStateObject.did == nil
+                        Group {
+                            if notLoggedIn {
+                                LoginView()
+                                    
+                            } else {
+                                ProfileView(did: sharedAuthStateObject.did!, ownProfile: true)
+                            }
+                        }
+                        .navigationTitle(notLoggedIn ? "Log in" : "Profile")
+                        .navigationBarTitleDisplayMode(.large)
+                        .toolbarVisibility(.visible)
+                        .toolbarBackground(Color(UIColor(named: "Foreground")!), for: .automatic)
+                        .toolbarBackground(.visible, for: .automatic)
+                        .toolbar {
+                            NavigationLink(destination: SettingsView()) {
+                                Image(systemName: "gear")
+                            }
                         }
                             
                     }

@@ -14,6 +14,7 @@ struct ProfileView: View {
     let did: String
     @StateObject var viewModel = ProfileViewModel()
     @State var selection: Selection = .posts
+    var ownProfile: Bool = false
     var body: some View {
         VStack(spacing: 0) {
             //Profile
@@ -99,7 +100,7 @@ struct ProfileView: View {
             }
         }
         .navigationTitle("Profile")
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(ownProfile ? .large : .inline)
         .toolbarVisibility(.visible, for: .automatic)
         .toolbarBackgroundVisibility(.visible, for: .automatic)
         .toolbarBackground(Color(UIColor(named: "Foreground")!), for: .automatic)
@@ -108,7 +109,7 @@ struct ProfileView: View {
 
 #Preview {
     NavigationStack{
-        ProfileView(did: "did:plc:vrk3nc7pk3b5kuk6y5dewnuw")
+        ProfileView(did: "did:plc:vrk3nc7pk3b5kuk6y5dewnuw", ownProfile: true)
     }
 }
 
