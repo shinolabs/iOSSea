@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var selectedTab: Int = 0
-    @StateObject private var sharedAuthStateObject = AuthenticationManager.shared.state
+    @StateObject private var viewModel : ContentViewModel = ContentViewModel()
     var body: some View {
         NavigationView {
             TabView(selection: $selectedTab) {
@@ -38,16 +38,14 @@ struct ContentView: View {
                 }
                 Tab("", systemImage: "person.crop.circle.fill", value: 2) {
                     NavigationStack{
-                        let notLoggedIn = sharedAuthStateObject.token == nil || sharedAuthStateObject.did == nil
                         Group {
-                            if notLoggedIn {
+                            if !viewModel.isLoggedIn {
                                 LoginView()
-                                    
                             } else {
-                                ProfileView(did: sharedAuthStateObject.did!, ownProfile: true)
+                                ProfileView(did: AuthenticationManager.shared.getDid()!, ownProfile: true)
                             }
                         }
-                        .navigationTitle(notLoggedIn ? "Log in" : "Profile")
+                        .navigationTitle(!viewModel.isLoggedIn ? "Log in" : "Profile")
                         .navigationBarTitleDisplayMode(.large)
                         .toolbarVisibility(.visible)
                         .toolbarBackground(Color(UIColor(named: "Foreground")!), for: .automatic)
@@ -55,6 +53,12 @@ struct ContentView: View {
                         .toolbar {
                             NavigationLink(destination: SettingsView()) {
                                 Image(systemName: "gear")
+                            }
+                        }
+                        .onReceive(AuthenticationManager.shared.eventSubject) { event in
+                            switch event {
+                            case .loggedIn:
+                                viewModel.isLoggedIn = true
                             }
                         }
                             

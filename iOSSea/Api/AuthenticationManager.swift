@@ -12,28 +12,39 @@ final class AuthenticationManager {
     
     private init() { }
     
+    private var token : String? = nil
+    private var did : String? = nil
+    
     let eventSubject = PassthroughSubject<AuthenticationEvent, Never>()
     
-    var state : AuthenticationState = AuthenticationState()
-    
     func loggedIn() -> Bool {
-        return state.token != nil
+        return token != nil
+    }
+    
+    func getDid() -> String? {
+        return did
     }
     
     func getToken() -> String? {
-        if state.token == nil {
+        if token == nil {
             // TODO: Try to get from keychain
         }
         
-        return state.token
+        return token
     }
     
     func setToken(token: String) async {
-        state.token = token
-        eventSubject.send(.loggedIn)
+        self.token = token
         
         // Get our identity
         await setIdentity()
+        
+        // We might have failed while fetching identity, make sure we don't do that.
+        if self.token != nil {
+            await MainActor.run {
+                eventSubject.send(.loggedIn)
+            }
+        }
         
         // TODO: Set in keychain.
     }
@@ -41,12 +52,12 @@ final class AuthenticationManager {
     func setIdentity() async {
         do {
             let identity : GetIdentityResponse = try await PinkSeaClient.shared.query(GetIdentityRequest())
-            state.did = identity.did
+            self.did = identity.did
             
             print("Received our identity, it's \(identity.did)")
         } catch {
             // We've failed to fetch the identity, it means that it has expired.
-            state.token = nil
+            self.token = nil
         }
     }
 }
