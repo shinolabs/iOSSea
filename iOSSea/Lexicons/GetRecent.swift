@@ -10,7 +10,7 @@ import Foundation
 struct GetRecentRequest : XrpcInvokable {
     var nsid = "com.shinolabs.pinksea.getRecent"
     
-    let since: Date?
+    let since: String?
     let limit: Int?
 }
 

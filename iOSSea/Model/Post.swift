@@ -16,14 +16,15 @@ struct Post: Codable {
     var nsfw: Bool
     var cid: String
     var at: String
-    
-    func getFormattedDate() -> String? {
+    func getDate() -> Date? {
         let inputFormatter = DateFormatter()
         inputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXXXX"
         inputFormatter.locale = Locale(identifier: "en_US_POSIX")
         inputFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-
-        guard let date = inputFormatter.date(from: creationTime) else {
+        return inputFormatter.date(from: creationTime)
+    }
+    func getFormattedDate() -> String? {
+        guard let date = getDate() else {
             return nil
         }
 
