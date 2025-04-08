@@ -11,43 +11,58 @@ struct ProfileView: View {
     enum Selection {
         case posts, replies
     }
+    
     let did: String
     @StateObject var viewModel = ProfileViewModel()
     @State var selection: Selection = .posts
     var ownProfile: Bool = false
+    
+    @Environment(\.openURL) var openURL
+    
     var body: some View {
         VStack(spacing: 0) {
             //Profile
             HStack {
                 //Profile picture - not implemented yet
                 VStack {
-                    Image("apple")
-                        .resizable()
-                        .frame(width: 80, height: 80)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                    Group {
+                        if !viewModel.profile.avatarUrl.isEmpty {
+                            AsyncImage(url: URL(string: viewModel.profile.avatarUrl)) { result in
+                                result.image?
+                                    .resizable()
+                                    .scaledToFill()
+                            }
+                        } else {
+                            ProgressView()
+                        }
+                    }
+                    .frame(width: 80, height: 80)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
                 .padding(.horizontal, 20)
                 //Info
                 VStack(alignment: .leading) {
                     //Name and edit buttons - not implemented yet
                     HStack {
-                        Text("Profile name").bold()
+                        Text("\(viewModel.profile.nickname)").bold()
                     }
                     //Handle
-                    Text("@\(viewModel.author.handle)")
+                    Text("@\(viewModel.profile.handle)")
                         .font(.subheadline).fontWeight(.light)
                     //Desc
-                    Text("Description")
+                    Text("\(viewModel.profile.description)")
                         .font(.callout)
                     //Sites
                     HStack {
-                        HStack {
-                            Image(systemName: "link")
-                            Text("[Bluesky](\("https://bsky.app/profile/\(viewModel.author.did)"))")
-                        }
-                        HStack {
-                            Image(systemName: "link")
-                            Text("[Website](\("https://\(viewModel.author.handle)"))")
+                        ForEach(viewModel.profile.links, id: \.name) { link in
+                            HStack {
+                                Image(systemName: "link")
+                                Button(action: {
+                                    openURL(URL(string: link.url)!)
+                                }, label: {
+                                    Text(link.name)
+                                })
+                            }
                         }
                     }
                 }
@@ -76,13 +91,13 @@ struct ProfileView: View {
         }
         .onAppear {
             Task {
-                viewModel.author.did = did
                 do {
-                    let handle : GetHandleFromDidResponse = try await PinkSeaClient.shared.query(GetHandleFromDidRequest(did: did))
-                    viewModel.author.handle = handle.handle
+                    let resp : GetProfileResponse = try await PinkSeaClient.shared.query(GetProfileRequest(did: did))
+                    viewModel.profile = Profile(from: resp)
                 } catch let error as GenericClientError {
                     print(error.message)
                 }
+                
                 do {
                     let feed : GetAuthorFeedResponse = try await PinkSeaClient.shared.query(GetAuthorFeedRequest(did: did))
                     
@@ -90,6 +105,7 @@ struct ProfileView: View {
                 } catch let error as GenericClientError {
                     print(error.message)
                 }
+                
                 do {
                     let reponses : GetAuthorFeedResponse = try await PinkSeaClient.shared.query(GetAuthorRepliesRequest(did: did))
                     

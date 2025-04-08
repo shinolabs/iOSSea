@@ -8,7 +8,7 @@
 import SwiftUI
 
 class ProfileViewModel: ObservableObject {
-    @Published var author: Author = Author(did: "", handle: "")
+    @Published var profile: Profile = Profile()
     @Published var posts: [Post] = []
     @Published var replies: [Post] = []
 }
