@@ -27,6 +27,9 @@ struct TimelineView<T: XrpcInvokable & OekakiRequestProtocol, V: Codable & Oekak
                         .frame(maxWidth: .infinity)
                     }.scrollTargetLayout()
                 }
+                .refreshable {
+                    doInitialDataLoad()
+                }
                 .scrollPosition(id: $viewModel.visibleItemID)
                 .onChange(of: viewModel.visibleItemID) { old, new in
                     if(new == "end" && !viewModel.isLoading) {
@@ -47,17 +50,23 @@ struct TimelineView<T: XrpcInvokable & OekakiRequestProtocol, V: Codable & Oekak
             }
         }
         .onAppear {
-            Task {
-                do {
-                    let timeline : V = try await PinkSeaClient.shared.query(queryWrapper.query)
-                    
-                    viewModel.posts = timeline.oekaki
-                    viewModel.lastDate = viewModel.posts.last?.creationTime.replacingOccurrences(of: "+00:00", with: "Z")
-                } catch let error as GenericClientError {
-                    print(error.message)
-                }
+            doInitialDataLoad()
+        }
+    }
+    
+    func doInitialDataLoad() {
+        Task {
+            queryWrapper.setSince(nil)
+            viewModel.isLoading = true
+            do {
+                let timeline : V = try await PinkSeaClient.shared.query(queryWrapper.query)
                 
+                viewModel.posts = timeline.oekaki
+                viewModel.lastDate = viewModel.posts.last?.creationTime.replacingOccurrences(of: "+00:00", with: "Z")
+            } catch let error as GenericClientError {
+                print(error.message)
             }
+            viewModel.isLoading = false
         }
     }
 }
