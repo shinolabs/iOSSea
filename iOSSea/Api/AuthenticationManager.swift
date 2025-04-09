@@ -6,15 +6,29 @@
 //
 
 import Combine
+import KeychainSwift
 
 final class AuthenticationManager {
     static let shared = AuthenticationManager()
     
-    private init() { }
+    private let tokenKeychainKey = "pinksea_token"
+    private init() {
+        guard let storedToken = keychain.get(tokenKeychainKey) else {
+            print("No token in keychain :(")
+            return
+        }
+        
+        print("Found token from keychain \(storedToken)")
+        
+        Task {
+            await setToken(token: storedToken)
+        }
+    }
     
     private var token : String? = nil
     private var did : String? = nil
     
+    let keychain = KeychainSwift()
     let eventSubject = PassthroughSubject<AuthenticationEvent, Never>()
     
     func loggedIn() -> Bool {
@@ -26,10 +40,6 @@ final class AuthenticationManager {
     }
     
     func getToken() -> String? {
-        if token == nil {
-            // TODO: Try to get from keychain
-        }
-        
         return token
     }
     
@@ -46,7 +56,7 @@ final class AuthenticationManager {
             }
         }
         
-        // TODO: Set in keychain.
+        keychain.set(token, forKey: tokenKeychainKey)
     }
     
     func setIdentity() async {
@@ -56,7 +66,7 @@ final class AuthenticationManager {
             
             print("Received our identity, it's \(identity.did)")
         } catch {
-            // We've failed to fetch the identity, it means that it has expired.
+            self.keychain.delete(tokenKeychainKey)
             self.token = nil
         }
     }

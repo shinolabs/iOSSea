@@ -55,17 +55,17 @@ struct ContentView: View {
                                 Image(systemName: "gear")
                             }
                         }
-                        .onReceive(AuthenticationManager.shared.eventSubject) { event in
-                            switch event {
-                            case .loggedIn:
-                                viewModel.isLoggedIn = true
-                            }
-                        }
                             
                     }
                     .toolbarBackground(Color(UIColor(named: "Foreground")!), for: .tabBar)
                     .toolbarBackground(.visible, for: .tabBar)
                 }
+            }
+        }
+        .onReceive(AuthenticationManager.shared.eventSubject) { event in
+            switch event {
+            case .loggedIn:
+                viewModel.isLoggedIn = true
             }
         }
     }
