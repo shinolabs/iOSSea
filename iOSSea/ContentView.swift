@@ -20,6 +20,13 @@ struct ContentView: View {
                             .toolbarVisibility(.visible)
                             .toolbarBackground(Color(UIColor(named: "Foreground")!), for: .automatic)
                             .toolbarBackground(.visible, for: .automatic)
+                            .toolbar {
+                                if viewModel.isLoggedIn {
+                                    NavigationLink(destination: PainterView()) {
+                                        Image(systemName: "plus.square")
+                                    }
+                                }
+                            }
                     }
                     .toolbarBackground(.visible, for: .tabBar)
                     .toolbarBackground(Color(UIColor(named: "Foreground")!), for: .tabBar)
