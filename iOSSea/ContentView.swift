@@ -74,6 +74,7 @@ struct ContentView: View {
                 viewModel.isLoggedIn = true
             }
         }.preferredColorScheme(settings.theme)
+            .tint(.tint)
     }
 }
 
