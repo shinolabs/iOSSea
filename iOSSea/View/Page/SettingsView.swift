@@ -10,7 +10,17 @@ import SwiftUI
 struct SettingsView: View {
     var body: some View {
         VStack {
-            Text("Settings")
+            List {
+                HStack(spacing: 0) {
+                    SelectThemeView()
+                }
+                .listRowSeparatorTint(Color.psText)
+                .listRowBackground(Color.psForeground)
+                .foregroundStyle(Color.psText, Color.psText) //2nd style for chevron
+                
+            }
+            .scrollContentBackground(.hidden)
+            .background(Color.psBackground)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.psBackground)
@@ -23,5 +33,7 @@ struct SettingsView: View {
 }
 
 #Preview {
-    SettingsView()
+    NavigationStack {
+        SettingsView()
+    }
 }

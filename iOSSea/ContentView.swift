@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    @ObservedObject var settings = SettingsManager.shared
     @State private var selectedTab: Int = 0
     @StateObject private var viewModel : ContentViewModel = ContentViewModel()
     var body: some View {
@@ -72,7 +73,7 @@ struct ContentView: View {
             case .loggedIn:
                 viewModel.isLoggedIn = true
             }
-        }
+        }.preferredColorScheme(SettingsManager.shared.theme)
     }
 }
 
