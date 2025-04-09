@@ -17,16 +17,16 @@ struct CommentView: View {
             //Timeline
             ZStack(alignment: .trailing) {
                 VStack(spacing: 0) {
-                    Color(UIColor(named: "Foreground")!).frame(width: 3)
+                    Color.psForeground.frame(width: 3)
                         .frame(height: height/2)
                     if(!last){
-                        Color(UIColor(named: "Foreground")!).frame(width: 3)
+                        Color.psForeground.frame(width: 3)
                             .frame(height: height/2)
                     } else {
                         Spacer()
                     }
                 }.frame(width: 30)
-                Color(UIColor(named: "Foreground")!)
+                Color.psForeground
                     .frame(width: 16.5, height: 3, alignment: .trailing)
                 
             }
@@ -97,10 +97,10 @@ struct CommentView: View {
                         }
                     }
                     HStack(spacing: 0) {
-                        Color(UIColor(named: "Foreground")!).frame(width: 10) // Left
+                        Color.psForeground.frame(width: 10) // Left
                         VStack(spacing: 0) {
                             Spacer()
-                            Color(UIColor(named: "Foreground")!).frame(height: 3) // Left
+                            Color.psForeground.frame(height: 3) // Left
                         }
                     }
                 }

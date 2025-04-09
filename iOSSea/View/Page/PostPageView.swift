@@ -20,11 +20,12 @@ struct PostPageView: View {
                 }
             }
         }
+        .background(Color.psBackground)
         .navigationTitle("@\(post.author.handle)'s post")
         .navigationBarTitleDisplayMode(.inline)
         .toolbarVisibility(.visible, for: .automatic)
         .toolbarBackgroundVisibility(.visible, for: .automatic)
-        .toolbarBackground(Color(UIColor(named: "Foreground")!), for: .automatic)
+        .toolbarBackground(Color.psForeground, for: .automatic)
         .onAppear {
             Task {
                 do {

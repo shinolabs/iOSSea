@@ -13,8 +13,10 @@ struct SearchView: View {
             ScrollView {
                 Text("Search View")
             }
-            Spacer()
         }
+        .frame(maxWidth: .infinity)
+        .background(Color.psBackground)
+
     }
 }
 

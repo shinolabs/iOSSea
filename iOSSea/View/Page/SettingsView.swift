@@ -12,11 +12,13 @@ struct SettingsView: View {
         VStack {
             Text("Settings")
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.psBackground)
         .navigationTitle("Settings")
         .navigationBarTitleDisplayMode(.inline)
         .toolbarVisibility(.visible, for: .automatic)
         .toolbarBackgroundVisibility(.visible, for: .automatic)
-        .toolbarBackground(Color(UIColor(named: "Foreground")!), for: .automatic)
+        .toolbarBackground(Color.psForeground, for: .automatic)
     }
 }
 

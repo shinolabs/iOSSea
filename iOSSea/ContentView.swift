@@ -17,7 +17,7 @@ struct ContentView: View {
                     HomeView()
                         .navigationTitle("Home")
                         .toolbarVisibility(.visible)
-                        .toolbarBackground(Color(UIColor(named: "Foreground")!), for: .automatic)
+                        .toolbarBackground(Color.psForeground, for: .automatic)
                         .toolbarBackground(.visible, for: .automatic)
                         .toolbar {
                             if viewModel.isLoggedIn {
@@ -28,18 +28,18 @@ struct ContentView: View {
                         }
                 }
                 .toolbarBackground(.visible, for: .tabBar)
-                .toolbarBackground(Color(UIColor(named: "Foreground")!), for: .tabBar)
+                .toolbarBackground(Color.psForeground, for: .tabBar)
             }
             Tab("", systemImage: "magnifyingglass", value: 1) {
                 NavigationStack{
                     SearchView()
                         .navigationTitle("Search")
                         .toolbarVisibility(.visible)
-                        .toolbarBackground(Color(UIColor(named: "Foreground")!), for: .automatic)
+                        .toolbarBackground(Color.psForeground, for: .automatic)
                         .toolbarBackground(.visible, for: .automatic)
                         
                 }
-                .toolbarBackground(Color(UIColor(named: "Foreground")!), for: .tabBar)
+                .toolbarBackground(Color.psForeground, for: .tabBar)
                 .toolbarBackground(.visible, for: .tabBar)
             }
             Tab("", systemImage: "person.crop.circle.fill", value: 2) {
@@ -54,7 +54,7 @@ struct ContentView: View {
                     .navigationTitle(!viewModel.isLoggedIn ? "Log in" : "Profile")
                     .navigationBarTitleDisplayMode(.large)
                     .toolbarVisibility(.visible)
-                    .toolbarBackground(Color(UIColor(named: "Foreground")!), for: .automatic)
+                    .toolbarBackground(Color.psForeground, for: .automatic)
                     .toolbarBackground(.visible, for: .automatic)
                     .toolbar {
                         NavigationLink(destination: SettingsView()) {
@@ -63,7 +63,7 @@ struct ContentView: View {
                     }
                         
                 }
-                .toolbarBackground(Color(UIColor(named: "Foreground")!), for: .tabBar)
+                .toolbarBackground(Color.psForeground, for: .tabBar)
                 .toolbarBackground(.visible, for: .tabBar)
             }
         }

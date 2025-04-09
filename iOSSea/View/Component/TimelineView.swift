@@ -49,6 +49,7 @@ struct TimelineView<T: XrpcInvokable & OekakiRequestProtocol, V: Codable & Oekak
                 }
             }
         }
+        .background(Color.psBackground)
         .onAppear {
             doInitialDataLoad()
         }
