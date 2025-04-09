@@ -15,7 +15,7 @@ struct SearchView: View {
             }
         }
         .frame(maxWidth: .infinity)
-        .background(Color.psBackground)
+        .background(Color.background)
 
     }
 }

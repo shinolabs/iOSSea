@@ -18,7 +18,7 @@ struct ContentView: View {
                     HomeView()
                         .navigationTitle("Home")
                         .toolbarVisibility(.visible)
-                        .toolbarBackground(Color.psForeground, for: .automatic)
+                        .toolbarBackground(Color.foreground, for: .automatic)
                         .toolbarBackground(.visible, for: .automatic)
                         .toolbar {
                             if viewModel.isLoggedIn {
@@ -29,18 +29,18 @@ struct ContentView: View {
                         }
                 }
                 .toolbarBackground(.visible, for: .tabBar)
-                .toolbarBackground(Color.psForeground, for: .tabBar)
+                .toolbarBackground(Color.foreground, for: .tabBar)
             }
             Tab("", systemImage: "magnifyingglass", value: 1) {
                 NavigationStack{
                     SearchView()
                         .navigationTitle("Search")
                         .toolbarVisibility(.visible)
-                        .toolbarBackground(Color.psForeground, for: .automatic)
+                        .toolbarBackground(Color.foreground, for: .automatic)
                         .toolbarBackground(.visible, for: .automatic)
                         
                 }
-                .toolbarBackground(Color.psForeground, for: .tabBar)
+                .toolbarBackground(Color.foreground, for: .tabBar)
                 .toolbarBackground(.visible, for: .tabBar)
             }
             Tab("", systemImage: "person.crop.circle.fill", value: 2) {
@@ -55,7 +55,7 @@ struct ContentView: View {
                     .navigationTitle(!viewModel.isLoggedIn ? "Log in" : "Profile")
                     .navigationBarTitleDisplayMode(.large)
                     .toolbarVisibility(.visible)
-                    .toolbarBackground(Color.psForeground, for: .automatic)
+                    .toolbarBackground(Color.foreground, for: .automatic)
                     .toolbarBackground(.visible, for: .automatic)
                     .toolbar {
                         NavigationLink(destination: SettingsView()) {
@@ -64,7 +64,7 @@ struct ContentView: View {
                     }
                         
                 }
-                .toolbarBackground(Color.psForeground, for: .tabBar)
+                .toolbarBackground(Color.foreground, for: .tabBar)
                 .toolbarBackground(.visible, for: .tabBar)
             }
         }
@@ -73,7 +73,7 @@ struct ContentView: View {
             case .loggedIn:
                 viewModel.isLoggedIn = true
             }
-        }.preferredColorScheme(SettingsManager.shared.theme)
+        }.preferredColorScheme(settings.theme)
     }
 }
 

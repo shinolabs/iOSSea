@@ -82,7 +82,7 @@ struct LoginView: View {
             .textFieldStyle(.roundedBorder)
         }
         .frame(maxHeight: .infinity)
-        .background(Color.psBackground)
+        .background(Color.background)
     }
 }
 

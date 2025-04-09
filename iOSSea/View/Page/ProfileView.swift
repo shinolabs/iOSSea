@@ -68,7 +68,7 @@ struct ProfileView: View {
                 }
                 Spacer()
             }.padding(.top, 10)
-            Color.psForeground.frame(height: 1).padding(.vertical, 10)
+            Color.foreground.frame(height: 1).padding(.vertical, 10)
             HStack {
                 Spacer()
                 Button(action: {selection = .posts}) {
@@ -81,7 +81,7 @@ struct ProfileView: View {
                 }
                 Spacer()
             }
-            Color.psForeground.frame(height: 1).padding(.top, 10)
+            Color.foreground.frame(height: 1).padding(.top, 10)
             PostGridView(
                 posts: selection == .replies ? viewModel.replies : viewModel.posts,
                 maxWidth: selection == .replies ? 500 : 160,
@@ -115,12 +115,12 @@ struct ProfileView: View {
                 }
             }
         }
-        .background(Color.psBackground)
+        .background(Color.background)
         .navigationTitle("Profile")
         .navigationBarTitleDisplayMode(ownProfile ? .large : .inline)
         .toolbarVisibility(.visible, for: .automatic)
         .toolbarBackgroundVisibility(.visible, for: .automatic)
-        .toolbarBackground(Color.psForeground, for: .automatic)
+        .toolbarBackground(Color.foreground, for: .automatic)
     }
 }
 

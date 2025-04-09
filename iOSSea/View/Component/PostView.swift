@@ -67,7 +67,7 @@ struct PostView: View {
                     ForEach(post.tags, id: \.self) { tag in
                         ZStack {
                             RoundedRectangle(cornerRadius: 10)
-                                .fill(Color.psForeground)
+                                .fill(Color.foreground)
                             Text("#\(tag)")
                                 .padding(5)
                         }
@@ -80,7 +80,7 @@ struct PostView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             }.overlay(
                 HStack(spacing: 0) {
-                    Color.psForeground.frame(width: 8)
+                    Color.foreground.frame(width: 8)
                     Spacer()
                 }
             )
@@ -97,11 +97,11 @@ struct PostView: View {
                 }
                 VStack(spacing: 0) {
                     HStack(spacing: 0) {
-                        Color.psForeground.frame(width: 3) // Left
+                        Color.foreground.frame(width: 3) // Left
                         Spacer()
-                        Color.psForeground.frame(width: 3) // Right
+                        Color.foreground.frame(width: 3) // Right
                     }
-                    Color.psForeground.frame(height: 3) // Bottom
+                    Color.foreground.frame(height: 3) // Bottom
                 }
             }
             

@@ -14,21 +14,21 @@ struct SettingsView: View {
                 HStack(spacing: 0) {
                     SelectThemeView()
                 }
-                .listRowSeparatorTint(Color.psText)
-                .listRowBackground(Color.psForeground)
-                .foregroundStyle(Color.psText, Color.psText) //2nd style for chevron
+                .listRowSeparatorTint(.text)
+                .listRowBackground(Color.foreground)
+                .foregroundStyle(.text, .text) //2nd style for chevron
                 
             }
             .scrollContentBackground(.hidden)
-            .background(Color.psBackground)
+            .background(Color.background)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.psBackground)
+        .background(Color.background)
         .navigationTitle("Settings")
         .navigationBarTitleDisplayMode(.inline)
         .toolbarVisibility(.visible, for: .automatic)
         .toolbarBackgroundVisibility(.visible, for: .automatic)
-        .toolbarBackground(Color.psForeground, for: .automatic)
+        .toolbarBackground(Color.foreground, for: .automatic)
     }
 }
 
