@@ -7,16 +7,16 @@
 
 import Foundation
 
-struct GetRecentRequest : XrpcInvokable, OekakiRequestProtocol {
-    init(since: String?, limit: Int?) {
-        self.since = since
-        self.limit = limit
-    }
+class GetRecentRequest : XrpcInvokable, OekakiRequestProtocol {
     
     var nsid = "com.shinolabs.pinksea.getRecent"
     
-    let since: String?
-    let limit: Int?
+    var since: String?
+    var limit: Int?
+    init(since: String? = nil, limit: Int? = nil) {
+        self.since = since
+        self.limit = limit
+    }
 }
 
 struct GetRecentResponse : Codable, OekakiResponseProtocol {

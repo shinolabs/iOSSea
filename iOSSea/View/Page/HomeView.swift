@@ -14,7 +14,7 @@ struct HomeView: View {
     @State private var last: String?
     @State private var isLoading: Bool = false
     var body: some View {
-        TimelineView<GetRecentRequest, GetRecentResponse>(viewModel: viewModel)
+        TimelineView<GetRecentRequest, GetRecentResponse>(viewModel: viewModel, query: GetRecentRequest(since: nil, limit: nil))
     }
 }
 
