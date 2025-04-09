@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TimelineView<T: XrpcInvokable & OekakiRequestProtocol, V: Codable & OekakiResponseProtocol>: View {
     @ObservedObject var viewModel: TimelineViewModel
-    @ObservedObject var query: T
+    @ObservedObject var queryWrapper: OekakiQueryWrapper<T>
     var body: some View {
         VStack(spacing: 0) {
             GeometryReader { geometry in
@@ -33,8 +33,8 @@ struct TimelineView<T: XrpcInvokable & OekakiRequestProtocol, V: Codable & Oekak
                         viewModel.isLoading = true
                         Task {
                             do {
-                                query.since = viewModel.lastDate
-                                let timeline : V = try await PinkSeaClient.shared.query(query)
+                                queryWrapper.setSince(viewModel.lastDate)
+                                let timeline : V = try await PinkSeaClient.shared.query(queryWrapper.query)
                                 viewModel.posts += timeline.oekaki
                                 viewModel.lastDate = viewModel.posts.last?.creationTime.replacingOccurrences(of: "+00:00", with: "Z")
                             } catch let error as GenericClientError {
@@ -49,7 +49,7 @@ struct TimelineView<T: XrpcInvokable & OekakiRequestProtocol, V: Codable & Oekak
         .onAppear {
             Task {
                 do {
-                    let timeline : V = try await PinkSeaClient.shared.query(query)
+                    let timeline : V = try await PinkSeaClient.shared.query(queryWrapper.query)
                     
                     viewModel.posts = timeline.oekaki
                     viewModel.lastDate = viewModel.posts.last?.creationTime.replacingOccurrences(of: "+00:00", with: "Z")
