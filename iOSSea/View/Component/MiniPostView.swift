@@ -9,8 +9,6 @@ import SwiftUI
 
 struct MiniPostView: View {
     let post: Post
-    let width: CGFloat
-    let reply: Bool
     var body: some View {
         AsyncImage(url: post.getUrl()) { phase in
             switch phase {
@@ -19,7 +17,6 @@ struct MiniPostView: View {
                     ProgressView()
                         .scaledToFill()
                 }
-                .frame(width: width, height: reply ? width/3 : width)
                 
                 
             case .success(let image):

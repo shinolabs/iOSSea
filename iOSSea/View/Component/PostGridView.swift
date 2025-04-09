@@ -26,8 +26,12 @@ struct PostGridView: View {
                             PostPageView(post: post)
                         }
                     }) {
-                        MiniPostView(post: post, width: width / (ceil(width/maxWidth)), reply: reply)
-                            .frame(width: width / (ceil(width/maxWidth)))
+                        let gridWidth = width / (ceil(width/maxWidth))
+                        MiniPostView(post: post)
+                            .frame(
+                                width: gridWidth,
+                                height: reply ? gridWidth/3 : gridWidth
+                            )
                     }
                 }
             }
