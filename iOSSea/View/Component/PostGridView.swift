@@ -32,6 +32,7 @@ struct PostGridView: View {
                                 width: gridWidth,
                                 height: reply ? gridWidth/3 : gridWidth
                             )
+                            .clipped(antialiased: true)
                     }
                 }
             }

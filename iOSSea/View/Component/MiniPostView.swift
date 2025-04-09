@@ -22,7 +22,7 @@ struct MiniPostView: View {
             case .success(let image):
                 image
                     .resizable()
-                    .scaledToFit()
+                    .scaledToFill()
             case .failure:
                 VStack(alignment: .center) {
                     Spacer()
