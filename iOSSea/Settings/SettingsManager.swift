@@ -9,7 +9,6 @@ import SwiftUI
 import CoreData
 class SettingsManager: ObservableObject {
     let context = PersistenceController.shared.container.viewContext
-    public static let shared = SettingsManager()
     
     @Published var theme: ColorScheme? {
         didSet {

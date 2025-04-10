@@ -12,6 +12,7 @@ struct iOSSeaApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(SettingsManager())
                 .onOpenURL { url in
                     guard let host = url.host() else {
                         return

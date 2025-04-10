@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SelectThemeView: View {
-    @ObservedObject private var settings = SettingsManager.shared
+    @EnvironmentObject private var settings: SettingsManager
     let options: [(String, String, ColorScheme?)] = [
         ("circle.lefthalf.fill", "System", nil),
         ("sun.max.fill", "Light", .light),

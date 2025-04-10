@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SelectLanguageView: View {
-    @ObservedObject private var settings = SettingsManager.shared
+    @EnvironmentObject private var settings: SettingsManager
     let options = Bundle.main.localizations.sorted { $0 < $1 }
 
     var body: some View {

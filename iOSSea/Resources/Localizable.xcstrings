@@ -8,7 +8,14 @@
 
     },
     "@%@'s post" : {
-
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Post %@"
+          }
+        }
+      }
     },
     "@handle.bsky.social" : {
 
@@ -17,6 +24,9 @@
 
     },
     "%@" : {
+
+    },
+    "Auto" : {
 
     },
     "Failed to log in" : {
@@ -35,6 +45,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Strona główna"
+          }
+        }
+      }
+    },
+    "Language" : {
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Język"
           }
         }
       }

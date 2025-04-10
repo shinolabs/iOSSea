@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject var settings = SettingsManager.shared
+    @EnvironmentObject var settings: SettingsManager
     @State private var selectedTab: Int = 0
     @StateObject private var viewModel : ContentViewModel = ContentViewModel()
     var body: some View {
@@ -30,6 +30,7 @@ struct ContentView: View {
                 }
                 .toolbarBackground(.visible, for: .tabBar)
                 .toolbarBackground(Color.foreground, for: .tabBar)
+                .id("tab1\(settings.language ??  "")")
             }
             Tab("", systemImage: "magnifyingglass", value: 1) {
                 NavigationStack{
@@ -42,6 +43,7 @@ struct ContentView: View {
                 }
                 .toolbarBackground(Color.foreground, for: .tabBar)
                 .toolbarBackground(.visible, for: .tabBar)
+                .id("tab2\(settings.language ??  "")")
             }
             Tab("", systemImage: "person.crop.circle.fill", value: 2) {
                 NavigationStack{
@@ -66,6 +68,7 @@ struct ContentView: View {
                 }
                 .toolbarBackground(Color.foreground, for: .tabBar)
                 .toolbarBackground(.visible, for: .tabBar)
+                .id("tab3\(settings.language ??  "")")
             }
         }
         .onReceive(AuthenticationManager.shared.eventSubject) { event in
@@ -75,9 +78,10 @@ struct ContentView: View {
             }
         }.preferredColorScheme(settings.theme)
             .tint(.tint)
+            .environment(\.locale, Locale(identifier: settings.language ?? ""))
     }
 }
 
 #Preview {
-    ContentView()
+    ContentView().environmentObject(SettingsManager())
 }

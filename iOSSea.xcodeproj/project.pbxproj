@@ -210,8 +210,8 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
 				pl,
+				Base,
 			);
 			mainGroup = CCC177C72DA1A3820005B701;
 			minimizedProjectReferenceProxies = 1;
