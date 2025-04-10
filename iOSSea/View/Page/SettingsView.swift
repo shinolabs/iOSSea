@@ -12,11 +12,24 @@ struct SettingsView: View {
         VStack {
             List {
                 HStack(spacing: 0) {
+                    Text("")
+                    Image(systemName: "sun.max.fill")
+                        .padding(.trailing, 10)
                     SelectThemeView()
                 }
                 .listRowSeparatorTint(.text)
                 .listRowBackground(Color.foreground)
                 .foregroundStyle(.text, .text) //2nd style for chevron
+                HStack(spacing: 0) {
+                    Text("")
+                    Image(systemName: "globe")
+                        .padding(.trailing, 10)
+                    SelectLanguageView()
+                        
+                }
+                .listRowSeparatorTint(.text)
+                .listRowBackground(Color.foreground)
+                .foregroundStyle(.text, .text)
                 
             }
             .scrollContentBackground(.hidden)

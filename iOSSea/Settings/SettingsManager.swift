@@ -26,6 +26,8 @@ class SettingsManager: ObservableObject {
         }
     }
     
+    @Published var language: String?
+    
     init() {
         let themeSetting = fetchSetting(key: "theme")
         guard let theme = themeSetting else {return}
