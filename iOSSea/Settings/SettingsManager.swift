@@ -22,22 +22,30 @@ class SettingsManager: ObservableObject {
             default:
                 theme = "auto"
             }
-            saveOrUpdateSetting(key: "theme", value: theme!)
+            saveOrUpdateSetting(key: "theme", value: theme)
         }
     }
     
-    @Published var language: String?
+    @Published var language: String? {
+        didSet {
+            saveOrUpdateSetting(key: "language", value: language)
+        }
+    }
     
     init() {
+        let languageSetting = fetchSetting(key: "language")
+        self.language = languageSetting?.value
+        
         let themeSetting = fetchSetting(key: "theme")
-        guard let theme = themeSetting else {return}
-        switch theme.value {
-        case "light":
-            self.theme = .light
-        case "dark":
-            self.theme = .dark
-        default:
-            self.theme = nil
+        if let theme = themeSetting {
+            switch theme.value {
+            case "light":
+                self.theme = .light
+            case "dark":
+                self.theme = .dark
+            default:
+                self.theme = nil
+            }
         }
     }
     
@@ -54,7 +62,7 @@ class SettingsManager: ObservableObject {
         }
     }
 
-    func saveOrUpdateSetting(key: String, value: String) {
+    func saveOrUpdateSetting(key: String, value: String?) {
         let setting = fetchSetting(key: key) ?? Setting(context: context) // Fetch or create new
         setting.key = key
         setting.value = value

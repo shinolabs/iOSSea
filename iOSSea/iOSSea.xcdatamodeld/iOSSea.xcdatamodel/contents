@@ -2,6 +2,6 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23605" systemVersion="24D81" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
     <entity name="Setting" representedClassName="Setting" syncable="YES" codeGenerationType="class">
         <attribute name="key" attributeType="String"/>
-        <attribute name="value" attributeType="String"/>
+        <attribute name="value" optional="YES" attributeType="String"/>
     </entity>
 </model>
