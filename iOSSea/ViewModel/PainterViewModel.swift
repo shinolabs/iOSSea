@@ -12,6 +12,9 @@ class PainterViewModel : ObservableObject {
     @Published var tool : Tool = PenTool()
     @Published var lastPoint : CGPoint?
     
+    @Published var scale : CGFloat = 1
+    @Published var position : CGPoint = CGPointZero
+    
     private var ctx : CGContext
     
     init() {
