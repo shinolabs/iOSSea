@@ -29,6 +29,26 @@
     "Auto" : {
 
     },
+    "Blur NSFW" : {
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zamazuj posty NSFW"
+          }
+        }
+      }
+    },
+    "Editor" : {
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edytor"
+          }
+        }
+      }
+    },
     "Failed to log in" : {
       "localizations" : {
         "pl" : {
@@ -39,12 +59,22 @@
         }
       }
     },
-    "Home" : {
+    "Hide NSFW" : {
       "localizations" : {
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Strona główna"
+            "value" : "Ukrywaj posty NSFW"
+          }
+        }
+      }
+    },
+    "In response to a post by" : {
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "W odpowiedzi do posta"
           }
         }
       }
@@ -99,6 +129,26 @@
         }
       }
     },
+    "Nothing here so far... (╥﹏╥)" : {
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Na razie nic... (╥﹏╥)"
+          }
+        }
+      }
+    },
+    "NSFW" : {
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NSFW"
+          }
+        }
+      }
+    },
     "Ok" : {
       "localizations" : {
         "pl" : {
@@ -135,6 +185,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Profil"
+          }
+        }
+      }
+    },
+    "Recent" : {
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ostatnie"
           }
         }
       }
@@ -181,6 +241,9 @@
           }
         }
       }
+    },
+    "TODO" : {
+
     }
   },
   "version" : "1.0"
