@@ -21,7 +21,7 @@ struct PostView: View {
             ZStack {
                 CachedImageView(url: post.image, alt: post.alt, loadingWidth: width, loadingHeight: width)
                     .blurButtonOverlay(active: post.nsfw && hidden && settings.blurNSFW,
-                                       disabled: revealable,
+                                       disabled: !revealable,
                                        action: {hidden = false})
             }
             
