@@ -11,6 +11,7 @@ struct PostView: View {
     let post: Post
     @State private var image: Image? = nil
     @State private var width: CGFloat = 0
+    @State private var avatarUrl: String = ""
     var body: some View {
         VStack(spacing: 0) {
             //Image
@@ -43,10 +44,19 @@ struct PostView: View {
                 //Profile
                 HStack {
                     NavigationLink(destination: ProfileView(did: post.author.did)) {
-                        Image("apple")
-                            .resizable()
-                            .frame(width: 60, height: 60)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                        Group {
+                            if !avatarUrl.isEmpty {
+                                AsyncImage(url: URL(string: avatarUrl)) { result in
+                                    result.image?
+                                        .resizable()
+                                        .scaledToFill()
+                                }
+                            } else {
+                                ProgressView()
+                            }
+                        }
+                        .frame(width: 60, height: 60)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
                     
                     VStack(alignment: .leading) {
@@ -105,8 +115,17 @@ struct PostView: View {
                     Color.foreground.frame(height: 3) // Bottom
                 }
             }
-            
         )
+        .onAppear {
+            Task {
+                do {
+                    let resp : GetProfileResponse = try await PinkSeaClient.shared.query(GetProfileRequest(did: post.author.did))
+                    avatarUrl = Profile(from: resp).avatarUrl
+                } catch let error as GenericClientError {
+                    print(error.message)
+                }
+            }
+        }
     }
 }
 

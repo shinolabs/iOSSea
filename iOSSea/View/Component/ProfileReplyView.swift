@@ -11,6 +11,7 @@ struct ProfileReplyView: View {
     let post: Post
     @State var width: CGFloat = 0
     @State var originalPost: Post?
+    @State var avatarUrl = ""
     var body: some View {
         VStack() {
             VStack {
@@ -20,18 +21,28 @@ struct ProfileReplyView: View {
                         .padding(.leading)
                     if(originalPost != nil) {
                         NavigationLink(destination: ProfileView(did: originalPost!.author.did)) {
-                            Image("apple")
-                                .resizable()
-                                .frame(width: 40, height: 40)
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                            Group {
+                                if !avatarUrl.isEmpty {
+                                    AsyncImage(url: URL(string: avatarUrl)) { result in
+                                        result.image?
+                                            .resizable()
+                                            .scaledToFill()
+                                    }
+                                } else {
+                                    ProgressView()
+                                }
+                            }
+                            .frame(width: 30, height: 30)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
                         }
                         NavigationLink(destination: ProfileView(did: originalPost!.author.did)) {
-                            Text("@\(post.author.handle)")
+                            Text("@\(originalPost!.author.handle)")
                                 .font(.caption.bold())
                         }
                     }
                     Spacer()
-                }.frame(minHeight: 40)
+                }.frame(minHeight: 30)
+                    .padding(.top, 5)
                 NavigationLink(destination: PostFromReplyView(rkey: post.at.components(separatedBy: "/").last ?? "", did: post.author.did)){
                     AsyncImage(url: post.getUrl()) { phase in
                         switch phase {
@@ -84,6 +95,16 @@ struct ProfileReplyView: View {
                     width = new
                 }.onAppear {
                     width = geometry.size.width
+                }
+            }
+        }
+        .onAppear {
+            Task {
+                do {
+                    let resp : GetProfileResponse = try await PinkSeaClient.shared.query(GetProfileRequest(did: post.author.did))
+                    avatarUrl = Profile(from: resp).avatarUrl
+                } catch let error as GenericClientError {
+                    print(error.message)
                 }
             }
         }
