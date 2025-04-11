@@ -18,7 +18,7 @@ struct PostFromReplyView: View {
                 if(post == nil) {
                     
                 } else {
-                    PostView(post: post!)
+                    PostView(post: post!, revealable: true)
                     ForEach(Array(comments.enumerated()), id: \.element.cid) {index, comment in
                         CommentView(post: comment, last: index == comments.count - 1)
                         

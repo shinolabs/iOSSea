@@ -9,13 +9,22 @@ import SwiftUI
 
 struct PostView: View {
     let post: Post
+    let revealable: Bool
+    @EnvironmentObject var settings: SettingsManager
     @State private var image: Image? = nil
     @State private var width: CGFloat = 0
     @State private var avatarUrl: String = ""
+    @State private var hidden: Bool = true
     var body: some View {
         VStack(spacing: 0) {
             //Image
-            CachedImageView(url: post.image, alt: post.alt)
+            ZStack {
+                CachedImageView(url: post.image, alt: post.alt, loadingWidth: width, loadingHeight: width)
+                    .blurButtonOverlay(active: post.nsfw && hidden && settings.blurNSFW,
+                                       disabled: revealable,
+                                       action: {hidden = false})
+            }
+            
             VStack {
                 //Profile
                 HStack {
@@ -105,7 +114,7 @@ struct PostView: View {
             alt: "hanyuu in the windows xp wallpaper",
             nsfw: false,
             cid: "",
-            at: "")
+            at: ""), revealable: true
         )
     }
 }

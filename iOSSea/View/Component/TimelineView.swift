@@ -17,7 +17,7 @@ struct TimelineView<T: XrpcInvokable & OekakiRequestProtocol, V: Codable & Oekak
                     VStack(spacing: 0) {
                         ForEach(viewModel.posts, id: \.image) { post in
                             NavigationLink(destination: PostPageView(post: post)) {
-                                PostView(post: post).id(post.cid)
+                                PostView(post: post, revealable: false).id(post.cid)
                             }
                         }
                         VStack {

@@ -9,9 +9,12 @@ import SwiftUI
 struct CommentView: View {
     let post: Post
     let last: Bool
+    @EnvironmentObject var settings: SettingsManager
     @State private var height: CGFloat = 0
     @State private var width: CGFloat = 0
     @State private var avatarUrl: String = ""
+    @State private var hidden: Bool = true
+    
     var body: some View {
         HStack(alignment: .top, spacing: 0) {
             //Timeline
@@ -53,11 +56,24 @@ struct CommentView: View {
                         .font(.system(size: 11, weight: .medium, design: .default))
                         .padding(.trailing, 10)
                 }
+                .overlay(
+                    ZStack {
+                        GeometryReader { geometry in
+                            VStack {}.onChange(of: geometry.size.width) {old, new in
+                                width = new
+                            }.onAppear {
+                                width = geometry.size.width
+                            }
+                        }
+                    }
+                )
                 .padding(.vertical, 5)
                 .background(Color.background)
                 .frame(alignment: .leading)
                 //Image
-                CachedImageView(url: post.image, alt: post.alt)
+                CachedImageView(url: post.image, alt: post.alt, loadingWidth: width, loadingHeight: width/3)
+                    .blurButtonOverlay(active: post.nsfw && hidden && settings.blurNSFW,
+                                       action: {hidden = false})
             }
             .padding(.leading, 7)
             .background(Color.foreground)
@@ -66,11 +82,8 @@ struct CommentView: View {
                     GeometryReader { geometry in
                         VStack {}.onChange(of: geometry.size.height) {old, new in
                             height = new
-                        }.onChange(of: geometry.size.width) {old, new in
-                            width = new
                         }.onAppear {
                             height = geometry.size.height
-                            width = geometry.size.width
                         }
                     }
                 }
@@ -90,4 +103,5 @@ struct CommentView: View {
 
 #Preview {
     CommentView(post: comments[1], last: true)
+        .environmentObject(SettingsManager())
 }

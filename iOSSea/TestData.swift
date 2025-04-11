@@ -146,7 +146,7 @@ let comments: [Post] = [
         author: Author(did: "did:plc:tyugvzks6xkrx4rqt6qsnnuo", handle: "fatty2can.bsky.social"),
         image: "https://harbor.pinksea.art/did:plc:tyugvzks6xkrx4rqt6qsnnuo/bafkreicyr5yxbsm6rlfqaaq2fgsz6ltmirchvex6j4koy2qbv6hixfnive",
         alt: "Yuuma waving",
-        nsfw: false,
+        nsfw: true,
         cid: "bafyreihpgn5mqa46e23fwzw4oeoyk27ghmuwz7ytmt6tyxizd2njbuecqm",
         at: "at://did:plc:tyugvzks6xkrx4rqt6qsnnuo/com.shinolabs.pinksea.oekaki/3ll5rilid7kpw"
     ),

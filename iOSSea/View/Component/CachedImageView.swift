@@ -10,11 +10,14 @@ import CachedAsyncImage
 struct CachedImageView: View {
     let url: String
     var alt: String?
+    var loadingWidth: CGFloat = 0
+    var loadingHeight: CGFloat = 0
     var body: some View {
         CachedAsyncImage(url: URL(string: url)) { phase in
             switch phase {
             case .empty:
                 ProgressView()
+                    .frame(width: loadingWidth, height: loadingHeight)
             case .success(let image):
                 image
                     .resizable()

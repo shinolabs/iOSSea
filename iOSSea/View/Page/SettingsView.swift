@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @EnvironmentObject private var settings: SettingsManager
     var body: some View {
         VStack {
             List {
@@ -30,6 +31,38 @@ struct SettingsView: View {
                 .listRowSeparatorTint(.text)
                 .listRowBackground(Color.foreground)
                 .foregroundStyle(.text, .text)
+                HStack(spacing: 0) {
+                    Text("")
+                    Image(systemName: "eye.slash")
+                        .padding(.trailing, 10).blur(radius: 1)
+                    Toggle("Blur NSFW", isOn: $settings.blurNSFW)
+                        
+                }
+                .listRowSeparatorTint(.text)
+                .listRowBackground(Color.foreground)
+                .foregroundStyle(.text, .text)
+                HStack(spacing: 0) {
+                    Text("")
+                    Image(systemName: "eye.slash")
+                        .padding(.trailing, 10)
+                    Toggle("Hide NSFW", isOn: $settings.hideNSFW)
+                        
+                }
+                .listRowSeparatorTint(.text)
+                .listRowBackground(Color.foreground)
+                .foregroundStyle(.text, .text)
+                HStack(spacing: 0) {
+                    Text("")
+                    Image(systemName: "globe")
+                        .padding(.trailing, 10)
+                    SelectLanguageView()
+                        
+                }
+                .listRowSeparatorTint(.text)
+                .listRowBackground(Color.foreground)
+                .foregroundStyle(.text, .text)
+                
+                
                 
             }
             .scrollContentBackground(.hidden)

@@ -35,6 +35,7 @@ struct ProfileReplyView: View {
                 }.frame(minHeight: 30)
                     .padding(.top, 5)
                 NavigationLink(destination: PostFromReplyView(rkey: post.at.components(separatedBy: "/").last ?? "", did: post.author.did)){
+                    CachedImageView(url: post.image, loadingWidth: width, loadingHeight: width/3)
                 }
             }
             .background(Color.background)

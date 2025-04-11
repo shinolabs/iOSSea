@@ -13,7 +13,7 @@ struct PostPageView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                PostView(post: post)
+                PostView(post: post, revealable: true)
                 ForEach(Array(comments.enumerated()), id: \.element.cid) {index, comment in
                     CommentView(post: comment, last: index == comments.count - 1)
                     

@@ -10,6 +10,39 @@ import CoreData
 class SettingsManager: ObservableObject {
     let context = PersistenceController.shared.container.viewContext
     
+    init() {
+        if let blurNSFWSetting = fetchSetting(key: "blurNSFW") {
+            if(blurNSFWSetting.value == "true"){
+                blurNSFW = true
+            } else {
+                blurNSFW = false
+            }
+        }
+        if let hideNSFWSetting = fetchSetting(key: "hideNSFW") {
+            if(hideNSFWSetting.value == "true"){
+                hideNSFW = true
+            } else {
+                hideNSFW = false
+            }
+        }
+        
+        let languageSetting = fetchSetting(key: "language")
+        self.language = languageSetting?.value
+        
+        let themeSetting = fetchSetting(key: "theme")
+        if let theme = themeSetting {
+            switch theme.value {
+            case "light":
+                self.theme = .light
+            case "dark":
+                self.theme = .dark
+            default:
+                self.theme = nil
+            }
+        }
+    }
+    
+    
     @Published var theme: ColorScheme? {
         didSet {
             var theme: String?
@@ -31,22 +64,18 @@ class SettingsManager: ObservableObject {
         }
     }
     
-    init() {
-        let languageSetting = fetchSetting(key: "language")
-        self.language = languageSetting?.value
-        
-        let themeSetting = fetchSetting(key: "theme")
-        if let theme = themeSetting {
-            switch theme.value {
-            case "light":
-                self.theme = .light
-            case "dark":
-                self.theme = .dark
-            default:
-                self.theme = nil
-            }
+    @Published var blurNSFW: Bool = true {
+        didSet {
+            saveOrUpdateSetting(key: "blurNSFW", value: blurNSFW ? "true" : "false")
         }
     }
+    
+    @Published var hideNSFW: Bool = false {
+        didSet {
+            saveOrUpdateSetting(key: "hideNSFW", value: hideNSFW ? "true" : "false")
+        }
+    }
+    
     
     func fetchSetting(key: String) -> Setting? {
         let request: NSFetchRequest<Setting> = Setting.fetchRequest()
