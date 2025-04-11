@@ -84,7 +84,7 @@ struct CommentView: View {
                     @unknown default:
                         EmptyView()
                     }
-                }
+                }.background(Color.background)
             }
             .padding(.leading, 7)
             .background(Color.foreground)

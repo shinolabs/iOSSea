@@ -13,10 +13,10 @@ struct ContentView: View {
     @StateObject private var viewModel : ContentViewModel = ContentViewModel()
     var body: some View {
         TabView(selection: $selectedTab) {
-            Tab("", systemImage: "house", value: 0) {
+            Tab("Recent", systemImage: "house", value: 0) {
                 NavigationStack {
                     HomeView()
-                        .navigationTitle("Home")
+                        .navigationTitle("Recent")
                         .toolbarVisibility(.visible)
                         .toolbarBackground(Color.foreground, for: .automatic)
                         .toolbarBackground(.visible, for: .automatic)
@@ -32,7 +32,7 @@ struct ContentView: View {
                 .toolbarBackground(Color.foreground, for: .tabBar)
                 .id("tab1\(settings.language ??  "")")
             }
-            Tab("", systemImage: "magnifyingglass", value: 1) {
+            Tab("Search", systemImage: "magnifyingglass", value: 1) {
                 NavigationStack{
                     SearchView()
                         .navigationTitle("Search")
@@ -45,7 +45,7 @@ struct ContentView: View {
                 .toolbarBackground(.visible, for: .tabBar)
                 .id("tab2\(settings.language ??  "")")
             }
-            Tab("", systemImage: "person.crop.circle.fill", value: 2) {
+            Tab("Profile", systemImage: "person.crop.circle.fill", value: 2) {
                 NavigationStack{
                     Group {
                         if !viewModel.isLoggedIn {

@@ -82,11 +82,30 @@ struct ProfileView: View {
                 Spacer()
             }
             Color.foreground.frame(height: 1).padding(.top, 10)
-            PostGridView(
-                posts: selection == .replies ? viewModel.replies : viewModel.posts,
-                maxWidth: selection == .replies ? 500 : 160,
-                reply: selection == .replies
-            )
+            if(selection == .replies) {
+                ScrollView {
+                    if(viewModel.replies.count == 0) {
+                        Text("Nothing here so far... (╥﹏╥)")
+                    } else {
+                        VStack {
+                            ForEach(viewModel.replies, id: \.cid) {reply in
+                                ProfileReplyView(post: reply)
+                            }
+                        }.padding()
+                    }
+                }
+            } else {
+                if(viewModel.posts.count == 0) {
+                    Text("Nothing here so far... (╥﹏╥)")
+                } else {
+                    PostGridView(
+                        posts:viewModel.posts,
+                        maxWidth: 160,
+                        reply: false
+                    )
+                }
+            }
+
             Spacer()
         }
         .onAppear {
