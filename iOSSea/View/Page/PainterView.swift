@@ -10,7 +10,7 @@ import SwiftUI
 struct PainterView: View {
     @StateObject var viewModel : PainterViewModel = PainterViewModel()
     var body: some View {
-        ZStack {
+        VStack(spacing: 0) {
             Image(uiImage: viewModel.image)
                 .gesture(
                     DragGesture(minimumDistance: 0)
@@ -23,7 +23,18 @@ struct PainterView: View {
                         }
                 )
                 .border(.accent)
-        }.scaledToFill().background(Color.black)
+        }
+        .background(Color.black)
+        .navigationTitle("Editor")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbarVisibility(.visible, for: .automatic)
+        .toolbarBackgroundVisibility(.visible, for: .automatic)
+        .toolbarBackground(Color(UIColor(named: "Foreground")!), for: .automatic)
+        .toolbar {
+            NavigationLink(destination: PainterMetadataView()) {
+                Image(systemName: "checkmark.square")
+            }
+        }
     }
 }
 
