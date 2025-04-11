@@ -21,19 +21,10 @@ struct ProfileReplyView: View {
                         .padding(.leading)
                     if(originalPost != nil) {
                         NavigationLink(destination: ProfileView(did: originalPost!.author.did)) {
-                            Group {
-                                if !avatarUrl.isEmpty {
-                                    AsyncImage(url: URL(string: avatarUrl)) { result in
-                                        result.image?
-                                            .resizable()
-                                            .scaledToFill()
-                                    }
-                                } else {
-                                    ProgressView()
-                                }
-                            }
-                            .frame(width: 30, height: 30)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            
+                            CachedImageView(url: avatarUrl)
+                                .frame(width: 30, height: 30)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
                         }
                         NavigationLink(destination: ProfileView(did: originalPost!.author.did)) {
                             Text("@\(originalPost!.author.handle)")
@@ -44,30 +35,6 @@ struct ProfileReplyView: View {
                 }.frame(minHeight: 30)
                     .padding(.top, 5)
                 NavigationLink(destination: PostFromReplyView(rkey: post.at.components(separatedBy: "/").last ?? "", did: post.author.did)){
-                    AsyncImage(url: post.getUrl()) { phase in
-                        switch phase {
-                        case .empty:
-                            VStack {
-                                ProgressView()
-                            }.frame(height: width/3)
-                        case .success(let image):
-                            image
-                                .resizable()
-                                .scaledToFit()
-                        case .failure:
-                            VStack {
-                                Image(systemName: "photo")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .padding(60)
-                                    .foregroundColor(.gray)
-                                Text(post.alt)
-                            }
-                            
-                        @unknown default:
-                            EmptyView()
-                        }
-                    }
                 }
             }
             .background(Color.background)

@@ -35,9 +35,6 @@ struct Post: Codable {
 
         return outputFormatter.string(from: date)
     }
-    func getUrl() -> URL {
-        URL(string: image)!
-    }
 }
 
 struct Author: Codable {

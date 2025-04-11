@@ -15,48 +15,14 @@ struct PostView: View {
     var body: some View {
         VStack(spacing: 0) {
             //Image
-            AsyncImage(url: post.getUrl()) { phase in
-                switch phase {
-                case .empty:
-                    VStack {
-                        ProgressView()
-                    }.frame(height: width)
-                    
-                case .success(let image):
-                    image
-                        .resizable()
-                        .scaledToFit()
-                case .failure:
-                    VStack {
-                        Image(systemName: "photo")
-                            .resizable()
-                            .scaledToFit()
-                            .padding(60)
-                            .foregroundColor(.gray)
-                        Text(post.alt)
-                    }
-                    
-                @unknown default:
-                    EmptyView()
-                }
-            }
+            CachedImageView(url: post.image, alt: post.alt)
             VStack {
                 //Profile
                 HStack {
                     NavigationLink(destination: ProfileView(did: post.author.did)) {
-                        Group {
-                            if !avatarUrl.isEmpty {
-                                AsyncImage(url: URL(string: avatarUrl)) { result in
-                                    result.image?
-                                        .resizable()
-                                        .scaledToFill()
-                                }
-                            } else {
-                                ProgressView()
-                            }
-                        }
-                        .frame(width: 60, height: 60)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        CachedImageView(url: avatarUrl)
+                            .frame(width: 60, height: 60)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
                     
                     VStack(alignment: .leading) {

@@ -9,6 +9,13 @@ import SwiftUI
 
 @main
 struct iOSSeaApp: App {
+    init() {
+        let memoryCapacity = 100 * 1024 * 1024 //100MB
+        let diskCapacity = 100 * 1024 * 1024 //100MB
+        let urlCache = URLCache(memoryCapacity: memoryCapacity, diskCapacity: diskCapacity, diskPath: "myCache")
+        URLCache.shared = urlCache
+    }
+    
     var body: some Scene {
         WindowGroup {
             ContentView()

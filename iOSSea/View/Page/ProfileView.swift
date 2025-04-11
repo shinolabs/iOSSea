@@ -25,18 +25,7 @@ struct ProfileView: View {
             HStack {
                 //Profile picture - not implemented yet
                 VStack {
-                    Group {
-                        if !viewModel.profile.avatarUrl.isEmpty {
-                            AsyncImage(url: URL(string: viewModel.profile.avatarUrl)) { result in
-                                result.image?
-                                    .resizable()
-                                    .scaledToFill()
-                            }
-                        } else {
-                            ProgressView()
-                        }
-                    }
-                    .frame(width: 80, height: 80)
+                    CachedImageView(url: viewModel.profile.avatarUrl)                    .frame(width: 80, height: 80)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
                 .padding(.horizontal, 20)

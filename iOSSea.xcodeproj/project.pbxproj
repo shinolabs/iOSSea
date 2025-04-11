@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3E918DBB2DA65D4400B83AE4 /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3E918DBA2DA65D4400B83AE4 /* KeychainSwift */; };
+		CC71D9CC2DA9513100937A99 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = CC71D9CB2DA9513100937A99 /* CachedAsyncImage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E918DBB2DA65D4400B83AE4 /* KeychainSwift in Frameworks */,
+				CC71D9CC2DA9513100937A99 /* CachedAsyncImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,6 +133,7 @@
 			name = iOSSea;
 			packageProductDependencies = (
 				3E918DBA2DA65D4400B83AE4 /* KeychainSwift */,
+				CC71D9CB2DA9513100937A99 /* CachedAsyncImage */,
 			);
 			productName = iOSSea;
 			productReference = CCC177D02DA1A3820005B701 /* iOSSea.app */;
@@ -217,6 +220,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				3E918DB92DA65D4400B83AE4 /* XCRemoteSwiftPackageReference "keychain-swift" */,
+				CC71D9CA2DA9513100937A99 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = CCC177D12DA1A3820005B701 /* Products */;
@@ -595,6 +599,14 @@
 				minimumVersion = 24.0.0;
 			};
 		};
+		CC71D9CA2DA9513100937A99 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lorenzofiamingo/swiftui-cached-async-image";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -602,6 +614,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3E918DB92DA65D4400B83AE4 /* XCRemoteSwiftPackageReference "keychain-swift" */;
 			productName = KeychainSwift;
+		};
+		CC71D9CB2DA9513100937A99 /* CachedAsyncImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CC71D9CA2DA9513100937A99 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;
+			productName = CachedAsyncImage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

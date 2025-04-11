@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-
 struct CommentView: View {
     let post: Post
     let last: Bool
@@ -39,17 +38,7 @@ struct CommentView: View {
                 //Info
                 HStack() {
                     NavigationLink(destination: ProfileView(did: post.author.did)) {
-                        Group {
-                            if !avatarUrl.isEmpty {
-                                AsyncImage(url: URL(string: avatarUrl)) { result in
-                                    result.image?
-                                        .resizable()
-                                        .scaledToFill()
-                                }
-                            } else {
-                                ProgressView()
-                            }
-                        }
+                        CachedImageView(url: avatarUrl)
                         .frame(width: 30, height: 30)
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                         .padding(.leading, 7)
@@ -68,34 +57,7 @@ struct CommentView: View {
                 .background(Color.background)
                 .frame(alignment: .leading)
                 //Image
-                AsyncImage(url: post.getUrl()) { phase in
-                    switch phase {
-                    case .empty:
-                        VStack {
-                            ProgressView()
-                        }
-                        .frame(width: width)
-                        .frame(height: width/3)
-                        .background(Color.background)
-                        
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .scaledToFit()
-                    case .failure:
-                        VStack {
-                            Image(systemName: "photo")
-                                .resizable()
-                                .scaledToFit()
-                                .padding(60)
-                                .foregroundColor(.gray)
-                            Text(post.alt)
-                        }
-                        
-                    @unknown default:
-                        EmptyView()
-                    }
-                }.background(Color.background)
+                CachedImageView(url: post.image, alt: post.alt)
             }
             .padding(.leading, 7)
             .background(Color.foreground)
