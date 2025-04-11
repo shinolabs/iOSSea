@@ -34,14 +34,15 @@ struct CommentView: View {
             .fixedSize()
             
             //Body
-            VStack(alignment: .leading) {
-                    //Info
+            VStack(alignment: .leading, spacing: 0) {
+                //Info
                 HStack() {
                     NavigationLink(destination: ProfileView(did: post.author.did)) {
                         Image("apple")
                             .resizable()
                             .frame(width: 30, height: 30)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .padding(.leading, 7)
                     }
                     NavigationLink(destination: ProfileView(did: post.author.did)) {
                         Text("@\(post.author.handle)")
@@ -53,7 +54,7 @@ struct CommentView: View {
                         .font(.system(size: 11, weight: .medium, design: .default))
                         .padding(.trailing, 10)
                 }
-                .padding(.leading, 12)
+                .background(Color.background)
                 .frame(alignment: .leading)
                 //Image
                 AsyncImage(url: post.getUrl()) { phase in
@@ -64,6 +65,7 @@ struct CommentView: View {
                         }
                         .frame(width: width)
                         .frame(height: width/3)
+                        .background(Color.background)
                         
                     case .success(let image):
                         image
@@ -84,6 +86,8 @@ struct CommentView: View {
                     }
                 }
             }
+            .padding(.leading, 7)
+            .background(Color.foreground)
             .overlay(
                 ZStack {
                     GeometryReader { geometry in
@@ -94,13 +98,6 @@ struct CommentView: View {
                         }.onAppear {
                             height = geometry.size.height
                             width = geometry.size.width
-                        }
-                    }
-                    HStack(spacing: 0) {
-                        Color.foreground.frame(width: 10) // Left
-                        VStack(spacing: 0) {
-                            Spacer()
-                            Color.foreground.frame(height: 3) // Left
                         }
                     }
                 }

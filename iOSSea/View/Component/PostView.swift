@@ -59,7 +59,8 @@ struct PostView: View {
                     }
                 }
                 .padding(.leading, 20)
-                .padding(.top, 5)
+                .padding(.top, 10)
+                .padding(.bottom, post.tags.count == 0 ? 10 : 0)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
                 //Tags
