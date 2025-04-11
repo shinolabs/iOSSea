@@ -9,14 +9,16 @@ import SwiftUI
 
 struct PostPageView: View {
     let post: Post
+    @EnvironmentObject var settings: SettingsManager
     @State var comments: [Post] = []
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
                 PostView(post: post, revealable: true)
                 ForEach(Array(comments.enumerated()), id: \.element.cid) {index, comment in
-                    CommentView(post: comment, last: index == comments.count - 1)
-                    
+                    if(!(comment.nsfw && settings.hideNSFW)) {
+                        CommentView(post: comment, last: index == comments.count - 1)
+                    }
                 }
             }
         }

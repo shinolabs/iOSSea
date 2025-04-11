@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TimelineView<T: XrpcInvokable & OekakiRequestProtocol, V: Codable & OekakiResponseProtocol>: View {
+    @EnvironmentObject var settings: SettingsManager
     @ObservedObject var viewModel: TimelineViewModel
     @ObservedObject var queryWrapper: OekakiQueryWrapper<T>
     var body: some View {
@@ -16,8 +17,10 @@ struct TimelineView<T: XrpcInvokable & OekakiRequestProtocol, V: Codable & Oekak
                 ScrollView(.vertical) {
                     VStack(spacing: 0) {
                         ForEach(viewModel.posts, id: \.image) { post in
-                            NavigationLink(destination: PostPageView(post: post)) {
-                                PostView(post: post, revealable: false).id(post.cid)
+                            if(!(post.nsfw && settings.hideNSFW)) {
+                                NavigationLink(destination: PostPageView(post: post)) {
+                                    PostView(post: post, revealable: false).id(post.cid)
+                                }
                             }
                         }
                         VStack {
