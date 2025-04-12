@@ -7,4 +7,5 @@
 
 enum AuthenticationEvent {
     case loggedIn
+    case loggedOut
 }

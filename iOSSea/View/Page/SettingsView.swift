@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject private var settings: SettingsManager
+    @Environment(\.dismiss) var dismiss
     var body: some View {
         VStack {
             List {
@@ -46,24 +47,29 @@ struct SettingsView: View {
                     Image(systemName: "eye.slash")
                         .padding(.trailing, 10)
                     Toggle("Hide NSFW", isOn: $settings.hideNSFW)
-                        
+                    
                 }
                 .listRowSeparatorTint(.text)
                 .listRowBackground(Color.foreground)
                 .foregroundStyle(.text, .text)
-                HStack(spacing: 0) {
-                    Text("")
-                    Image(systemName: "globe")
-                        .padding(.trailing, 10)
-                    SelectLanguageView()
+                if(AuthenticationManager.shared.getDid() != nil) {
+                    Button(action: {
+                        Task {
+                            await AuthenticationManager.shared.clearIdentity()
+                            dismiss()
+                        }
                         
+                    }) {
+                        Text("Logout")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .frame(alignment: .center)
+                    .buttonStyle(BorderlessButtonStyle())
+                    .containerShape(Rectangle())
+                    .listRowBackground(Color.foreground)
+                    .listRowSeparatorTint(.text)
+                    .foregroundStyle(.red)
                 }
-                .listRowSeparatorTint(.text)
-                .listRowBackground(Color.foreground)
-                .foregroundStyle(.text, .text)
-                
-                
-                
             }
             .scrollContentBackground(.hidden)
             .background(Color.background)

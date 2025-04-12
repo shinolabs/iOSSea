@@ -75,6 +75,8 @@ struct LoginView: View {
                     switch event {
                     case .loggedIn:
                         oauthNeedLogin = false
+                    case .loggedOut:
+                        oauthNeedLogin = true
                     }
                 }
             }

@@ -75,6 +75,8 @@ struct ContentView: View {
             switch event {
             case .loggedIn:
                 viewModel.isLoggedIn = true
+            case .loggedOut:
+                viewModel.isLoggedIn = false
             }
         }.preferredColorScheme(settings.theme)
             .tint(.tint)

@@ -70,4 +70,18 @@ final class AuthenticationManager {
             self.token = nil
         }
     }
+    
+    func clearIdentity() async {
+        do {
+            let _ : InvalidateSessionResponse = try await PinkSeaClient.shared.query(InvalidateSessionRequest())
+        } catch {
+            print("Session invalidation failed")
+        }
+        self.keychain.delete(tokenKeychainKey)
+        self.token = nil
+        self.did = nil
+        await MainActor.run {
+            eventSubject.send(.loggedOut)
+        }
+    }
 }
