@@ -9,4 +9,5 @@ import UIKit
 
 protocol Tool {
     func draw(from: CGPoint, to: CGPoint, ctx: CGContext)
+    func update(color: CGColor, size: CGFloat)
 }

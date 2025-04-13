@@ -9,8 +9,9 @@ import UIKit
 
 class PainterViewModel : ObservableObject {
     @Published var image : UIImage
-    @Published var tool : Tool = PenTool()
+    @Published var tool : Tool = PenTool(size: 8, color: CGColor(red: 0, green: 0, blue: 0, alpha: 255))
     @Published var lastPoint : CGPoint?
+    @Published var toolSize : CGFloat = 8
     
     @Published var scale : CGFloat = 1
     @Published var position : CGPoint = CGPointZero
@@ -41,5 +42,9 @@ class PainterViewModel : ObservableObject {
     func useTool(from: CGPoint, to: CGPoint) {
         tool.draw(from: from, to: to, ctx: ctx)
         image = UIImage(cgImage: ctx.makeImage()!)
+    }
+    
+    func updateTool(color: CGColor) {
+        tool.update(color: color, size: toolSize)
     }
 }

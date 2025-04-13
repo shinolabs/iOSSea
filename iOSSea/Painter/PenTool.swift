@@ -11,11 +11,13 @@ import CoreGraphics
 class PenTool : Tool {
     private var brush : CGImage?
     
-    init() {
-        generateBrush(size: 16)
+    init(size: CGFloat, color: CGColor) {
+        generateBrush(sizeFloat: size, color: color)
     }
     
-    func generateBrush(size: Int) {
+    func generateBrush(sizeFloat: CGFloat, color: CGColor) {
+        let size = Int(sizeFloat)
+        print(size)
         let bitsPerComponent = 8
         let bytesPerPixel = 4
         let bytesPerRow = size * bytesPerPixel
@@ -39,6 +41,8 @@ class PenTool : Tool {
             fatalError("Could not create CGContext")
         }
         
+        let components = color.components!
+        
         let r = size / 2
         for x in 0..<size {
             for y in 0..<size {
@@ -48,9 +52,9 @@ class PenTool : Tool {
                     let offset = y * bytesPerRow + x * bytesPerPixel
                     let buffer = bitmapData.bindMemory(to: UInt8.self, capacity: totalBytes)
                     
-                    buffer[offset + 0] = 0   // R
-                    buffer[offset + 1] = 0   // G
-                    buffer[offset + 2] = 0   // B
+                    buffer[offset + 0] = UInt8(components[0] * 255) // R
+                    buffer[offset + 1] = UInt8(components[1] * 255)   // G
+                    buffer[offset + 2] = UInt8(components[2] * 255)   // B
                     buffer[offset + 3] = 255 // A
                 }
             }
@@ -74,5 +78,9 @@ class PenTool : Tool {
             let y = (from.y + t * dy) - (CGFloat(brush.height) / 2.0)
             ctx.draw(brush, in: CGRect(x: x, y: y, width: CGFloat(brush.width), height: CGFloat(brush.height)))
         }
+    }
+    
+    func update(color: CGColor, size: CGFloat) {
+        generateBrush(sizeFloat: size, color: color)
     }
 }
