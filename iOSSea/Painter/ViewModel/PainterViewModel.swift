@@ -21,7 +21,10 @@ class PainterViewModel : ObservableObject {
     @Published var activeLayer : Layer? = nil
 
     init() {
-        tool = PenTool(size: 8, color: CGColor(red: 0, green: 0, blue: 0, alpha: 255))
+        let color = CGColor(red: 0, green: 0, blue: 0, alpha: 255)
+        
+        tool = PenTool(size: 8, color: color)
+        toolColor = color
         
         makeLayer(size: size)
         setActiveLayer(layer: layers.first!)
