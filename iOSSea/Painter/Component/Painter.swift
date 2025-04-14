@@ -11,8 +11,8 @@ struct Painter: View {
     @StateObject var viewModel : PainterViewModel
     @State var imageRect : CGRect = .zero
     @State var lastZoom : CGFloat = 1.0
-    @State var color : CGColor = CGColor(red: 0, green: 0, blue: 0, alpha: 1)
     @State var layerSheetVisible : Bool = false
+    @State var toolSettingsSheetVisible : Bool = false
     
     var body: some View {
         ZStack {
@@ -48,7 +48,7 @@ struct Painter: View {
             
             HStack {
                 Button(action: {
-                    viewModel.tool = PenTool(size: 8, color: color)
+                    viewModel.tool = PenTool(size: 8, color: viewModel.toolColor)
                 }, label: {
                     Image(systemName: "pencil")
                         .foregroundStyle(.white)
@@ -61,10 +61,17 @@ struct Painter: View {
                         .foregroundStyle(.white)
                 })
                 
-                ColorPicker("", selection: $color, supportsOpacity: false)
+                Button(action: {
+                    toolSettingsSheetVisible = true
+                }, label: {
+                    Image(systemName: "pencil.and.scribble")
+                        .foregroundStyle(.white)
+                })
+                
+                ColorPicker("", selection: $viewModel.toolColor, supportsOpacity: false)
                     .frame(width: 10)
-                    .onChange(of: color) { _ in
-                        viewModel.updateTool(color: color)
+                    .onChange(of: viewModel.toolColor) { _ in
+                        viewModel.updateTool()
                     }
             }
             .padding()
@@ -95,6 +102,17 @@ struct Painter: View {
                 LayerListSheetView(viewModel: viewModel)
                 Button(action: {
                     layerSheetVisible = false
+                }, label: {
+                    Text("Close")
+                })
+            }
+            .presentationDetents([.medium])
+        }
+        .sheet(isPresented: $toolSettingsSheetVisible) {
+            VStack {
+                ToolSettingsSheetView(viewModel: viewModel)
+                Button(action: {
+                    toolSettingsSheetVisible = false
                 }, label: {
                     Text("Close")
                 })

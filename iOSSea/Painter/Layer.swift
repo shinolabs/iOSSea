@@ -28,6 +28,11 @@ class Layer : ObservableObject {
             bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
         )!
         
+        // Disable antialiasing
+        ctx.setShouldAntialias(false)
+        ctx.setAllowsAntialiasing(false)
+        ctx.interpolationQuality = .none
+        
         // Coordinates are flipped between UIKit and SwiftUI
         ctx.translateBy(x: 0, y: size.height)
         ctx.scaleBy(x: 1, y: -1)

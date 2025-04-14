@@ -17,7 +17,11 @@ class PenTool : Tool {
     
     func generateBrush(sizeFloat: CGFloat, color: CGColor) {
         let size = Int(sizeFloat)
-        print(size)
+        guard size > 0 else {
+            fatalError("Invalid brush size")
+        }
+        
+        print("New brush size: \(size)")
         let bitsPerComponent = 8
         let bytesPerPixel = 4
         let bytesPerRow = size * bytesPerPixel
@@ -40,6 +44,10 @@ class PenTool : Tool {
                                       bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue) else {
             fatalError("Could not create CGContext")
         }
+        
+        context.setShouldAntialias(false)
+        context.setAllowsAntialiasing(false)
+        context.interpolationQuality = .none
         
         let components = color.components!
         

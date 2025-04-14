@@ -9,9 +9,10 @@ import UIKit
 
 class PainterViewModel : ObservableObject {
     @Published var layers : [Layer] = []
-    @Published var tool : Tool = PenTool(size: 8, color: CGColor(red: 0, green: 0, blue: 0, alpha: 255))
+    @Published var tool : Tool
     @Published var lastPoint : CGPoint?
     @Published var toolSize : CGFloat = 8
+    @Published var toolColor : CGColor = UIColor.black.cgColor
     @Published var size : CGSize = CGSize(width: 400, height: 400)
     
     @Published var scale : CGFloat = 1
@@ -20,6 +21,8 @@ class PainterViewModel : ObservableObject {
     @Published var activeLayer : Layer? = nil
 
     init() {
+        tool = PenTool(size: 8, color: CGColor(red: 0, green: 0, blue: 0, alpha: 255))
+        
         makeLayer(size: size)
         setActiveLayer(layer: layers.first!)
         
@@ -47,7 +50,8 @@ class PainterViewModel : ObservableObject {
         layer.rebuild()
     }
     
-    func updateTool(color: CGColor) {
-        tool.update(color: color, size: toolSize)
+    func updateTool() {
+        print("Updating: \(toolColor) \(toolSize)")
+        tool.update(color: toolColor, size: toolSize)
     }
 }
