@@ -2,26 +2,25 @@
 //  PainterView.swift
 //  iOSSea
 //
-//  Created by nano on 09/04/2025.
+//  Created by nano on 14/04/2025.
 //
 
 import SwiftUI
 
-struct PainterView: View {
-    @StateObject var viewModel = PainterViewModel()
+struct Painter: View {
+    @StateObject var viewModel : PainterViewModel
     @State var imageRect : CGRect = .zero
     @State var lastZoom : CGFloat = 1.0
     @State var color : CGColor = CGColor(red: 0, green: 0, blue: 0, alpha: 1)
+    @State var layerSheetVisible : Bool = false
     
     var body: some View {
         ZStack {
             ZStack {
-                Image(uiImage: viewModel.image)
-                    .resizable()
-                    .interpolation(.none)
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: viewModel.image.size.width * viewModel.scale, height: viewModel.image.size.height * viewModel.scale)
-            }.frame(width: viewModel.image.size.width * viewModel.scale, height: viewModel.image.size.height * viewModel.scale)
+                ForEach(viewModel.layers, id: \.name) { layer in
+                    LayerCanvasView(layer: layer, scale: $viewModel.scale)
+                }
+            }.frame(width: viewModel.size.width * viewModel.scale, height: viewModel.size.height * viewModel.scale)
                 .background(
                     GeometryReader { geo in
                         Color.clear
@@ -55,6 +54,13 @@ struct PainterView: View {
                         .foregroundStyle(.white)
                 })
                 
+                Button(action: {
+                    layerSheetVisible = true
+                }, label: {
+                    Image(systemName: "square.2.layers.3d.top.filled")
+                        .foregroundStyle(.white)
+                })
+                
                 ColorPicker("", selection: $color, supportsOpacity: false)
                     .frame(width: 10)
                     .onChange(of: color) { _ in
@@ -84,20 +90,21 @@ struct PainterView: View {
         )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color("Painter"))
-        .navigationTitle("Editor")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbarVisibility(.visible, for: .automatic)
-        .toolbarBackgroundVisibility(.visible, for: .automatic)
-        .toolbarBackground(Color(UIColor(named: "Foreground")!), for: .automatic)
-        .toolbar {
-            NavigationLink(destination: PainterMetadataView()) {
-                Image(systemName: "checkmark.square")
+        .sheet(isPresented: $layerSheetVisible) {
+            VStack {
+                LayerListSheetView(viewModel: viewModel)
+                Button(action: {
+                    layerSheetVisible = false
+                }, label: {
+                    Text("Close")
+                })
             }
+            .presentationDetents([.medium])
         }
     }
 }
 
-
 #Preview {
-    PainterView()
+    let viewModel = PainterViewModel()
+    Painter(viewModel: viewModel)
 }
