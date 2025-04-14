@@ -24,6 +24,7 @@ class PainterViewModel : ObservableObject {
         setActiveLayer(layer: layers.first!)
         
         activeLayer!.fill(color: UIColor.white.cgColor)
+        activeLayer!.rebuild()
     }
     
     func makeLayer(size: CGSize) {
