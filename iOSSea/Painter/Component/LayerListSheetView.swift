@@ -12,16 +12,19 @@ struct LayerListSheetView: View {
     
     var body: some View {
         VStack {
-            ForEach(viewModel.layers, id: \.name) { layer in
-                Button(action: {
-                    viewModel.setActiveLayer(layer: layer)
-                }, label: {
-                    Text(layer.name)
-                })
+            List {
+                ForEach(viewModel.layers, id: \.name) { layer in
+                    LayerItemView(layer: layer, onTap: {
+                        viewModel.setActiveLayer(layer: layer)
+                    })
+                }.onDelete { offsets in
+                    viewModel.layers.remove(atOffsets: offsets)
+                }
             }
         }
         Button(action: {
-            viewModel.makeLayer(size: viewModel.size)
+            let layer = viewModel.makeLayer(size: viewModel.size)
+            viewModel.setActiveLayer(layer: layer)
         }, label: {
             Text("Add new layer")
         })
