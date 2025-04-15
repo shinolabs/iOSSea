@@ -25,7 +25,10 @@ struct Painter: View {
                     GeometryReader { geo in
                         Color.clear
                             .onAppear {
-                                imageRect = geo.frame(in: .global)
+                                // Defer this to run on the main queue
+                                DispatchQueue.main.async {
+                                    imageRect = geo.frame(in: .global)
+                                }
                             }
                             .onChange(of: geo.size) { _, _ in
                                 imageRect = geo.frame(in: .global)
