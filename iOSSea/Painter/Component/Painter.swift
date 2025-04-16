@@ -10,9 +10,11 @@ import SwiftUI
 struct Painter: View {
     @StateObject var viewModel : PainterViewModel
     @State var imageRect : CGRect = .zero
-    @State var lastZoom : CGFloat = 1.0
+    @State var lastZoom : CGFloat? = nil
+    @State var lastPosition : CGPoint? = nil
     @State var layerSheetVisible : Bool = false
     @State var toolSettingsSheetVisible : Bool = false
+    @State var position : CGPoint = .zero
     
     var body: some View {
         ZStack {
@@ -20,7 +22,25 @@ struct Painter: View {
                 ForEach(viewModel.layers, id: \.name) { layer in
                     LayerCanvasView(layer: layer, scale: $viewModel.scale)
                 }
-            }.frame(width: viewModel.size.width * viewModel.scale, height: viewModel.size.height * viewModel.scale)
+                
+                PanGestureView { gesture in
+                    let point = gesture.translation(in: gesture.view)
+                    var dp = point
+                    dp.x -= (lastPosition ?? point).x
+                    dp.y -= (lastPosition ?? point).y
+                    
+                    position.x += dp.x
+                    position.y += dp.y
+                    
+                    if (gesture.state == .ended) {
+                        lastPosition = nil
+                    } else {
+                        lastPosition = point
+                    }
+                    
+                }
+            }
+            .frame(width: viewModel.size.width * viewModel.scale, height: viewModel.size.height * viewModel.scale)
                 .background(
                     GeometryReader { geo in
                         Color.clear
@@ -36,7 +56,7 @@ struct Painter: View {
                     }
                 )
                 .gesture(
-                    DragGesture(minimumDistance: 0, coordinateSpace: .global)
+                    DragGesture(minimumDistance: 0.01, coordinateSpace: .global)
                         .onChanged { value in
                             var point = value.location
                             point.x = (point.x - imageRect.minX - viewModel.position.x) / viewModel.scale
@@ -48,6 +68,7 @@ struct Painter: View {
                             viewModel.lastPoint = nil
                         }
                 )
+                .offset(x: position.x, y: position.y)
             
             HStack {
                 Button(action: {
@@ -84,18 +105,18 @@ struct Painter: View {
             
         }
         .simultaneousGesture(
-            MagnificationGesture()
-                .onChanged { value in
-                    let dv = value - lastZoom
+            MagnifyGesture(minimumScaleDelta: 0.01)
+                .onChanged { gesture in
+                    let dv = gesture.magnification - (lastZoom ?? gesture.magnification)
                     viewModel.scale += dv
                     if (viewModel.scale < 0.5) {
                         viewModel.scale = 0.5
                     }
-                    lastZoom = value
+                    lastZoom = gesture.magnification
                 }
-                .onEnded { _ in
+                .onEnded { gesture in
                     viewModel.lastPoint = nil
-                    lastZoom = 1.0
+                    lastZoom = nil
                 }
         )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
