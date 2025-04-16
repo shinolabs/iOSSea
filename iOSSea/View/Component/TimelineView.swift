@@ -54,7 +54,9 @@ struct TimelineView<T: XrpcInvokable & OekakiRequestProtocol, V: Codable & Oekak
         }
         .background(Color.background)
         .onAppear {
-            doInitialDataLoad()
+            if(viewModel.posts.count == 0) {
+                doInitialDataLoad()
+            }
         }
     }
     

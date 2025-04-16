@@ -22,7 +22,7 @@ struct ContentView: View {
                         .toolbarBackground(.visible, for: .automatic)
                         .toolbar {
                             if viewModel.isLoggedIn {
-                                NavigationLink(destination: PainterView()) {
+                                NavigationLink(destination: PainterScreenView()) {
                                     Image(systemName: "plus.square")
                                 }
                             }
