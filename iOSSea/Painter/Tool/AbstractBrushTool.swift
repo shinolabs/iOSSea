@@ -63,16 +63,36 @@ class AbstractBrushTool : Tool {
             return
         }
         
-        let dx = to.x - from.x
-        let dy = to.y - from.y
-        let distance = hypot(dx, dy)
-        let steps = Int(distance)
+        var x0 = Int(from.x)
+        var y0 = Int(from.y)
+        let x1 = Int(to.x)
+        let y1 = Int(to.y)
+        
+        let dx = abs(x1 - x0)
+        let sx = x0 < x1 ? 1 : -1
+        let dy = -abs(y1 - y0)
+        let sy = y0 < y1 ? 1 : -1
+        
+        var error = dx + dy
+        
+        let halfSize = brush.width / 2
+        
+        while true {
+            ctx.draw(brush, in: CGRect(x: x0 - halfSize, y: y0 - halfSize, width: brush.width, height: brush.height))
             
-        for i in 0...steps {
-            let t = CGFloat(i) / CGFloat(steps)
-            let x = (from.x + t * dx) - (CGFloat(brush.width) / 2.0)
-            let y = (from.y + t * dy) - (CGFloat(brush.height) / 2.0)
-            ctx.draw(brush, in: CGRect(x: x, y: y, width: CGFloat(brush.width), height: CGFloat(brush.height)))
+            if x0 == x1, y0 == y1 {
+                break
+            }
+            
+            let e2 = 2 * error
+            if e2 >= dy {
+                error += dy
+                x0 += sx
+            }
+            if e2 <= dx {
+                error += dx
+                y0 += sy
+            }
         }
     }
     

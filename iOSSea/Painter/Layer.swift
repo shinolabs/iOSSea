@@ -10,6 +10,7 @@ import UIKit
 class Layer : ObservableObject {
     @Published var name : String
     @Published var image : UIImage
+    @Published var active : Bool = false
     
     var size : CGSize
     var ctx : CGContext

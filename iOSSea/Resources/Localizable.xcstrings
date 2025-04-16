@@ -26,6 +26,9 @@
     "%@" : {
 
     },
+    "Add new layer" : {
+
+    },
     "Auto" : {
 
     },
@@ -38,6 +41,9 @@
           }
         }
       }
+    },
+    "Close" : {
+
     },
     "Editor" : {
       "localizations" : {
@@ -129,6 +135,9 @@
         }
       }
     },
+    "Logout" : {
+
+    },
     "Nothing here so far... (╥﹏╥)" : {
       "localizations" : {
         "pl" : {
@@ -219,7 +228,7 @@
         }
       }
     },
-    "Search View" : {
+    "Search for posts, users, tags..." : {
 
     },
     "Settings" : {
@@ -232,6 +241,9 @@
         }
       }
     },
+    "Tags" : {
+
+    },
     "Theme" : {
       "localizations" : {
         "pl" : {
@@ -243,6 +255,9 @@
       }
     },
     "TODO" : {
+
+    },
+    "Users" : {
 
     }
   },

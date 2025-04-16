@@ -42,7 +42,12 @@ class PainterViewModel : ObservableObject {
     
     func setActiveLayer(layer: Layer) {
         print("Set active layer to: \(layer.name)")
+        if let prevLayer = activeLayer {
+            prevLayer.active = false
+        }
+        
         activeLayer = layer
+        layer.active = true
     }
     
     func useTool(from: CGPoint, to: CGPoint) {
@@ -56,7 +61,6 @@ class PainterViewModel : ObservableObject {
     }
     
     func updateTool() {
-        print("Updating: \(toolColor) \(toolSize)")
         tool.update(color: toolColor, size: toolSize)
     }
 }

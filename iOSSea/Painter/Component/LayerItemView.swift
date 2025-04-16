@@ -32,7 +32,7 @@ struct LayerItemView: View {
                 .clipShape(.rect(cornerRadius: 15))
             VStack {
                 Text(layer.name)
-                    .font(.headline)
+                    .fontWeight(layer.active ? .bold : .regular)
             }
             Spacer()
         }

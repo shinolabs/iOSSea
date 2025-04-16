@@ -12,7 +12,6 @@ struct ToolSettingsSheetView: View {
     var body: some View {
         VStack {
             Slider(value: $viewModel.toolSize, in: 1...64, step: 1) { value in
-                print(viewModel.toolSize)
                 viewModel.updateTool()
             }
         }
