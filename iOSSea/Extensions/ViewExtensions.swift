@@ -10,8 +10,8 @@ import SwiftUI
 public extension View {
     func blurButtonOverlay(active: Bool, disabled: Bool = false , value: CGFloat = 10, action: @escaping () -> Void) -> some View {
         return self
-            .clipped(antialiased: true)
             .blur(radius: active ? value : 0)
+            .clipped(antialiased: true)
             .overlay {
                 if(active) {
                     VStack {
@@ -32,8 +32,8 @@ public extension View {
     
     func blurOverlay(_ active: Bool, value: CGFloat = 10) -> some View {
         return self
-            .clipped(antialiased: true)
             .blur(radius: active ? value : 0)
+            .clipped(antialiased: true)
             .overlay {
                 if(active) {
                     ZStack {

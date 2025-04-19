@@ -27,7 +27,14 @@
 
     },
     "Add new layer" : {
-
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dodaj warstwę"
+          }
+        }
+      }
     },
     "Auto" : {
 
@@ -43,7 +50,14 @@
       }
     },
     "Close" : {
-
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zamknij"
+          }
+        }
+      }
     },
     "Editor" : {
       "localizations" : {
@@ -136,7 +150,14 @@
       }
     },
     "Logout" : {
-
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wyloguj"
+          }
+        }
+      }
     },
     "Nothing here so far... (╥﹏╥)" : {
       "localizations" : {
@@ -229,7 +250,14 @@
       }
     },
     "Search for posts, users, tags..." : {
-
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Szukaj postów, profili, tagów"
+          }
+        }
+      }
     },
     "Settings" : {
       "localizations" : {
@@ -242,7 +270,14 @@
       }
     },
     "Tags" : {
-
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tagi"
+          }
+        }
+      }
     },
     "Theme" : {
       "localizations" : {
@@ -258,7 +293,14 @@
 
     },
     "Users" : {
-
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profile"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

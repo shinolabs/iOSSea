@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+enum SearchType: String {
+    case tags, profiles, posts
+}
+
+
 struct SearchView: View {
     private enum Selection {
         case posts
@@ -15,17 +20,11 @@ struct SearchView: View {
     }
     @StateObject private var viewModel = TimelineViewModel()
     @State var searchText: String = ""
+    @State var query: String = ""
     @State private var selection: Selection = .posts
+    @State var refresh = UUID()
     var body: some View {
         VStack(spacing: 0) {
-            TextField("Search for posts, users, tags...", text: $searchText)
-                .padding(.horizontal, 10)
-                .padding(.vertical, 5)
-                .font(.subheadline)
-                .background(Color.gray.opacity(0.25))
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-                .padding(.horizontal, 30)
-                .padding(.vertical, 10)
             Color.foreground.frame(height: 1)
             HStack {
                 Spacer()
@@ -46,46 +45,31 @@ struct SearchView: View {
             VStack {
                 switch selection {
                 case .posts:
-                    TimelineView<GetRecentRequest, GetRecentResponse>(
+                    TimelineView<GetSearchResultsRequest, GetSearchResultsResponse>(
                         viewModel: viewModel,
-                      queryWrapper: OekakiQueryWrapper<GetRecentRequest>(query: GetRecentRequest(since: nil, limit: nil)))
+                        queryWrapper: OekakiQueryWrapper<GetSearchResultsRequest>(
+                            query: GetSearchResultsRequest(
+                                type: SearchType.posts.rawValue,
+                                query: query,
+                                since: nil,
+                                limit: nil)
+                        ),
+                        refresh: refresh
+                    )
                 case .users:
-                    ScrollView {
-                        SearchResultView(
-                            url: "https://harbor.pinksea.art/did:plc:dglney4ocjv73dxxkfel6q3z/bafkreih5s6rxidbo6cw7zdi42ofmey2m4h4wseppmqipx2qcz5klq3stem",
-                            title: "Makrowave",
-                            subtitle: "@makrowave.bsky.social",
-                            destination: {ProfileView(did: "did:plc:dglney4ocjv73dxxkfel6q3z")}
-                        )
-                        SearchResultView(
-                            url: "https://harbor.pinksea.art/did:plc:dglney4ocjv73dxxkfel6q3z/bafkreih5s6rxidbo6cw7zdi42ofmey2m4h4wseppmqipx2qcz5klq3stem",
-                            title: "Makrowave",
-                            subtitle: "@makrowave.bsky.social",
-                            destination: {ProfileView(did: "did:plc:dglney4ocjv73dxxkfel6q3z")}
-                        )
-                        SearchResultView(
-                            url: "https://harbor.pinksea.art/did:plc:dglney4ocjv73dxxkfel6q3z/bafkreih5s6rxidbo6cw7zdi42ofmey2m4h4wseppmqipx2qcz5klq3stem",
-                            title: "Makrowave",
-                            subtitle: "@makrowave.bsky.social",
-                            destination: {ProfileView(did: "did:plc:dglney4ocjv73dxxkfel6q3z")}
-                        )
-
-                    }
+                    SearchResultScrollView(type: SearchType.profiles, query: query)
                 case .tags:
-                    ScrollView {
-                        SearchResultView(url: "https://harbor.pinksea.art/did:plc:dglney4ocjv73dxxkfel6q3z/bafkreih5s6rxidbo6cw7zdi42ofmey2m4h4wseppmqipx2qcz5klq3stem",
-                                         title: "#pc",
-                                         subtitle: "1 post", destination: {EmptyView()})
-                        SearchResultView(url: "https://harbor.pinksea.art/did:plc:dglney4ocjv73dxxkfel6q3z/bafkreih5s6rxidbo6cw7zdi42ofmey2m4h4wseppmqipx2qcz5klq3stem",
-                                         title: "#pc",
-                                         subtitle: "1 post", destination: {EmptyView()})
-                        SearchResultView(url: "https://harbor.pinksea.art/did:plc:dglney4ocjv73dxxkfel6q3z/bafkreih5s6rxidbo6cw7zdi42ofmey2m4h4wseppmqipx2qcz5klq3stem",
-                                         title: "#pc",
-                                         subtitle: "1 post", destination: {EmptyView()})
-                    }
+                    SearchResultScrollView(type: SearchType.tags, query: query)
                 }
             }
             
+        }
+        .searchable(text: $searchText)
+        .autocorrectionDisabled()
+        .textInputAutocapitalization(.never)
+        .onSubmit(of: .search) {
+            query = searchText
+            refresh = UUID()
         }
         .frame(maxWidth: .infinity)
         .background(Color.background)

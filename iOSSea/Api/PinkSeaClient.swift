@@ -10,7 +10,8 @@ import Foundation
 final class PinkSeaClient {
     static let shared = PinkSeaClient()
     
-    let baseUrl = URL(string: "https://api.pinksea.art/xrpc/")
+//    let baseUrl = URL(string: "https://api.pinksea.art/xrpc/")
+    let baseUrl = URL(string: "https://sea.ata.moe/xrpc/")
     
     private init() {
         

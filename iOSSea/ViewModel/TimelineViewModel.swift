@@ -12,4 +12,5 @@ class TimelineViewModel: ObservableObject {
     @Published var visibleItemID: String?
     @Published var lastDate: String?
     @Published var isLoading: Bool = false
+    @Published var hasInitialized: Bool = false
 }

@@ -7,24 +7,26 @@
 
 import SwiftUI
 
-//Can be used as search result universally
-//title - nick/#tag, subtitle - @handle/number of posts
 struct SearchResultView<Destination: View>: View {
+    @EnvironmentObject var settings: SettingsManager
     let url: String
     let title: String
     let subtitle: String
+    let nsfw: Bool
     let destination: () -> Destination
     
     init(
             url: String,
             title: String,
             subtitle: String,
+            nsfw: Bool = false,
             @ViewBuilder destination: @escaping () -> Destination
         ) {
             self.url = url
             self.title = title
             self.subtitle = subtitle
             self.destination = destination
+            self.nsfw = nsfw
         }
     
     var body: some View {
@@ -32,6 +34,7 @@ struct SearchResultView<Destination: View>: View {
             VStack(spacing: 0) {
                 HStack {
                     CachedImageView(url: url)
+                        .blurOverlay(nsfw && (settings.blurNSFW || settings.hideNSFW))
                         .frame(width: 80, height: 80)
                         .cornerRadius(22)
                         .padding(.leading)
@@ -54,3 +57,53 @@ struct SearchResultView<Destination: View>: View {
                      subtitle: "1 post", destination: {EmptyView()})
 }
  
+
+struct TagSearchView: View {
+    @EnvironmentObject var settings: SettingsManager
+    let tag: TagResponse
+    
+    var body: some View {
+        SearchResultView(url: tag.oekaki.image,
+                         title: "#\(tag.tag)",
+                         subtitle: "\(tag.count) post\(tag.count == 1 ? "" : "s")",
+                         nsfw: tag.oekaki.nsfw) {
+            TimelineView<GetTagFeedRequest, GetTagFeedResponse>(
+                queryWrapper: OekakiQueryWrapper<GetTagFeedRequest>(
+                    query: GetTagFeedRequest(
+                        tag: tag.tag,
+                        since: nil,
+                        limit: nil)
+                )
+            )
+            .background(Color.background)
+            .navigationTitle("#\(tag.tag)")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbarVisibility(.visible, for: .automatic)
+            .toolbarBackgroundVisibility(.visible, for: .automatic)
+            .toolbarBackground(Color.foreground, for: .automatic)
+        }
+    }
+}
+
+struct ProfileSearchView: View {
+    let did: String
+    @State var profile: Profile?
+    var body: some View {
+        SearchResultView(url: profile?.avatarUrl ?? "",
+                         title: profile?.nickname ?? "",
+                         subtitle: profile != nil ? "@\(profile!.nickname)" : "",
+                         nsfw: false) {
+            ProfileView(did: did)
+        }
+        .onAppear {
+            Task {
+                do {
+                    let resp : GetProfileResponse = try await PinkSeaClient.shared.query(GetProfileRequest(did: did))
+                    profile = Profile(from: resp)
+                } catch let error as GenericClientError {
+                    print(error.message)
+                }
+            }
+        }
+    }
+}
