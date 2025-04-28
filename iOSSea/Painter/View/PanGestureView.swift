@@ -19,6 +19,9 @@ struct PanGestureView : UIViewRepresentable {
         let view = UIView(frame: .zero)
         let panRecognizer = UIPanGestureRecognizer(target: context.coordinator,
                                                    action: #selector(Coordinator.handlePan(_:)))
+        
+        panRecognizer.maximumNumberOfTouches = 2
+        panRecognizer.minimumNumberOfTouches = 2
         view.addGestureRecognizer(panRecognizer)
         return view
     }

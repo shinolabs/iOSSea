@@ -50,7 +50,7 @@ struct Painter: View {
                                     imageRect = geo.frame(in: .global)
                                 }
                             }
-                            .onChange(of: geo.size) { _, _ in
+                            .onChange(of: geo.frame(in: .global)) { _, _ in
                                 imageRect = geo.frame(in: .global)
                             }
                     }
