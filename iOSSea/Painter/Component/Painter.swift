@@ -15,6 +15,8 @@ struct Painter: View {
     @State var layerSheetVisible : Bool = false
     @State var toolSettingsSheetVisible : Bool = false
     @State var position : CGPoint = .zero
+    @State var toolbarX: CGFloat = 50
+    @State var toolbarY: CGFloat = 50
     
     var body: some View {
         ZStack {
@@ -41,6 +43,25 @@ struct Painter: View {
                 }
             }
             .frame(width: viewModel.size.width * viewModel.scale, height: viewModel.size.height * viewModel.scale)
+                .overlay(
+                    GeometryReader { geometry in
+                        VStack {}.onChange(of: geometry.size.width) {old, new in
+                            let screenWidth = UIScreen.main.bounds.width
+                            if(new > screenWidth) {
+                                toolbarX = (new - screenWidth) / 2 + 50
+                            } else {
+                                toolbarX = 50
+                            }
+                        }.onChange(of: geometry.size.height) {old, new in
+                            let screenHeight = UIScreen.main.bounds.height
+                            if(new + 190 > screenHeight) {
+                                toolbarY = (new - screenHeight)/2 + 98 + 44
+                            } else {
+                                toolbarY = 50
+                            }
+                        }
+                    }
+                )
                 .background(
                     GeometryReader { geo in
                         Color.clear
@@ -101,7 +122,7 @@ struct Painter: View {
             .padding()
             .background(.black)
             .border(.accent)
-            .position(x: 50, y: 50)
+            .position(x: toolbarX, y: toolbarY)
             
         }
         .simultaneousGesture(
