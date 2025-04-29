@@ -10,6 +10,8 @@ import SwiftUI
 class PainterMetadataViewModel : ObservableObject {
     @Published var renderedImage : UIImage?
     @Published var description: String = ""
+    @Published var nsfw: Bool = false
+    @Published var crosspostToBluesky: Bool = false
     
     init() {
         renderedImage = nil
