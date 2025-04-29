@@ -26,6 +26,10 @@ struct Painter: View {
                 }
                 
                 PanGestureView { gesture in
+                    if (gesture.state == .began) {
+                        lastPosition = nil
+                    }
+                    
                     let point = gesture.translation(in: gesture.view)
                     var dp = point
                     dp.x -= (lastPosition ?? point).x
@@ -33,13 +37,8 @@ struct Painter: View {
                     
                     position.x += dp.x
                     position.y += dp.y
-                    
-                    if (gesture.state == .ended) {
-                        lastPosition = nil
-                    } else {
-                        lastPosition = point
-                    }
-                    
+
+                    lastPosition = point
                 }
             }
             .frame(width: viewModel.size.width * viewModel.scale, height: viewModel.size.height * viewModel.scale)

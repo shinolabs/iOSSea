@@ -38,6 +38,7 @@ struct PanGestureView : UIViewRepresentable {
         }
         
         @objc func handlePan(_ gesture: UIPanGestureRecognizer) {
+            guard gesture.numberOfTouches == 2 else { return }
             onPan(gesture)
         }
     }
