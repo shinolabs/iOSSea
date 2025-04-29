@@ -63,4 +63,25 @@ class PainterViewModel : ObservableObject {
     func updateTool() {
         tool.update(color: toolColor, size: toolSize)
     }
+    
+    func render() -> UIImage {
+        // Create a new temporary layer to store the final pic
+        let finalLayer = Layer(name: "Temporary", size: size)
+        
+        finalLayer.ctx.translateBy(x: 0, y: size.height)
+        finalLayer.ctx.scaleBy(x: 1, y: -1)
+        
+        for layer in layers {
+            guard let cgImage = layer.image.cgImage else {
+                fatalError("Failed to render final image.")
+            }
+            
+            finalLayer.ctx.draw(cgImage, in: CGRect(x: 0, y: 0, width: layer.size.width, height: layer.size.height))
+        }
+        
+        // Rebuild the layer
+        finalLayer.rebuild()
+        
+        return finalLayer.image
+    }
 }

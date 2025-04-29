@@ -18,7 +18,7 @@ struct PainterScreenView: View {
             .toolbarBackgroundVisibility(.visible, for: .automatic)
             .toolbarBackground(Color(UIColor(named: "Foreground")!), for: .automatic)
             .toolbar {
-                NavigationLink(destination: PainterMetadataView()) {
+                NavigationLink(destination: PainterMetadataView(viewModel: PainterMetadataViewModel(from: viewModel))) {
                     Image(systemName: "checkmark.square")
                 }
             }
