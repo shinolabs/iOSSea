@@ -26,6 +26,9 @@
     "%@" : {
 
     },
+    "%lld" : {
+
+    },
     "Add new layer" : {
       "localizations" : {
         "pl" : {
@@ -35,6 +38,9 @@
           }
         }
       }
+    },
+    "Attaching a short description helps give context about your drawing. Optional." : {
+
     },
     "Auto" : {
 
@@ -49,6 +55,9 @@
         }
       }
     },
+    "Brush Size" : {
+
+    },
     "Close" : {
       "localizations" : {
         "pl" : {
@@ -58,6 +67,12 @@
           }
         }
       }
+    },
+    "Crosspost to Bluesky" : {
+
+    },
+    "Description" : {
+
     },
     "Editor" : {
       "localizations" : {
@@ -88,6 +103,9 @@
           }
         }
       }
+    },
+    "If checked, we'll automatically create a post for you on Bluesky with the image and a link to PinkSea attached." : {
+
     },
     "In response to a post by" : {
       "localizations" : {
@@ -159,6 +177,9 @@
         }
       }
     },
+    "No image lol" : {
+
+    },
     "Nothing here so far... (╥﹏╥)" : {
       "localizations" : {
         "pl" : {
@@ -198,6 +219,15 @@
           }
         }
       }
+    },
+    "Please check if your post contains adult content such as nudity or highly suggestive themes." : {
+
+    },
+    "Post" : {
+
+    },
+    "Posting your artwork" : {
+
     },
     "Posts" : {
       "localizations" : {
@@ -250,6 +280,7 @@
       }
     },
     "Search for posts, users, tags..." : {
+      "extractionState" : "stale",
       "localizations" : {
         "pl" : {
           "stringUnit" : {
@@ -258,6 +289,9 @@
           }
         }
       }
+    },
+    "Search for something" : {
+
     },
     "Settings" : {
       "localizations" : {
@@ -268,6 +302,9 @@
           }
         }
       }
+    },
+    "Social" : {
+
     },
     "Tags" : {
       "localizations" : {
@@ -288,9 +325,6 @@
           }
         }
       }
-    },
-    "TODO" : {
-
     },
     "Users" : {
       "localizations" : {

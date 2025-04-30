@@ -15,7 +15,7 @@ struct Painter: View {
     @State var layerSheetVisible : Bool = false
     @State var toolSettingsSheetVisible : Bool = false
     @State var position : CGPoint = .zero
-    @State var toolbarX: CGFloat = 50
+    @State var toolbarX: CGFloat = 100
     @State var toolbarY: CGFloat = 50
     
     var body: some View {
@@ -47,9 +47,9 @@ struct Painter: View {
                         VStack {}.onChange(of: geometry.size.width) {old, new in
                             let screenWidth = UIScreen.main.bounds.width
                             if(new > screenWidth) {
-                                toolbarX = (new - screenWidth) / 2 + 50
+                                toolbarX = (new - screenWidth) / 2 + 100
                             } else {
-                                toolbarX = 50
+                                toolbarX = 100
                             }
                         }.onChange(of: geometry.size.height) {old, new in
                             let screenHeight = UIScreen.main.bounds.height
@@ -90,7 +90,7 @@ struct Painter: View {
                 )
                 .offset(x: position.x, y: position.y)
             
-            HStack {
+            HStack(spacing: 20) {
                 Button(action: {
                     viewModel.tool = PenTool(size: 8, color: viewModel.toolColor)
                 }, label: {
@@ -114,13 +114,13 @@ struct Painter: View {
                 
                 ColorPicker("", selection: $viewModel.toolColor, supportsOpacity: false)
                     .frame(width: 10)
-                    .onChange(of: viewModel.toolColor) { _ in
+                    .onChange(of: viewModel.toolColor) { _, _ in
                         viewModel.updateTool()
                     }
             }
             .padding()
-            .background(.black)
-            .border(.accent)
+            .background(.painterToolboxBackground)
+            .border(.painterToolboxBorder)
             .position(x: toolbarX, y: toolbarY)
             
         }
@@ -140,7 +140,7 @@ struct Painter: View {
                 }
         )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color("Painter"))
+        .background(.painter)
         .sheet(isPresented: $layerSheetVisible) {
             VStack {
                 LayerListSheetView(viewModel: viewModel)
