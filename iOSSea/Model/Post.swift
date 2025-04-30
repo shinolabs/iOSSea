@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Post: Codable {
+struct Post: Codable, Hashable {
     var tags: [String]
     var creationTime: String
     var author: Author
@@ -16,6 +16,7 @@ struct Post: Codable {
     var nsfw: Bool
     var cid: String
     var at: String
+    
     func getDate() -> Date? {
         let inputFormatter = DateFormatter()
         inputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXXXX"
@@ -23,6 +24,7 @@ struct Post: Codable {
         inputFormatter.timeZone = TimeZone(secondsFromGMT: 0)
         return inputFormatter.date(from: creationTime)
     }
+    
     func getFormattedDate() -> String? {
         guard let date = getDate() else {
             return nil
@@ -34,6 +36,14 @@ struct Post: Codable {
         outputFormatter.timeZone = TimeZone.current
 
         return outputFormatter.string(from: date)
+    }
+    
+    static func == (lhs: Post, rhs: Post) -> Bool {
+        return lhs.at == rhs.at
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(at)
     }
 }
 

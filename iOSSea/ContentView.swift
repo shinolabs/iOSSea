@@ -10,7 +10,10 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var settings: SettingsManager
     @State private var selectedTab: Int = 0
+    @State private var uploadedPost: Post? = nil
+    @State private var redirectToUploadedPost: Bool = false
     @StateObject private var viewModel : ContentViewModel = ContentViewModel()
+    
     var body: some View {
         TabView(selection: $selectedTab) {
             Tab("Recent", systemImage: "house", value: 0) {
@@ -24,7 +27,16 @@ struct ContentView: View {
                             if viewModel.isLoggedIn {
                                 NavigationLink(destination: PainterScreenView()) {
                                     Image(systemName: "plus.square")
-                                }
+                                } 
+                            }
+                        }
+                        .onReceive(UploadEventManager.shared.uploadedEvent) { post in
+                            uploadedPost = post
+                            redirectToUploadedPost = true
+                        }
+                        .navigationDestination(isPresented: $redirectToUploadedPost) {
+                            if let post = uploadedPost {
+                                PostPageView(post: post)
                             }
                         }
                 }
