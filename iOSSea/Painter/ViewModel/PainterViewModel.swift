@@ -10,6 +10,8 @@ import UIKit
 class PainterViewModel : ObservableObject {
     @Published var layers : [Layer] = []
     @Published var tool : Tool
+    @Published var undoStack : UndoStack = UndoStack()
+    
     @Published var lastPoint : CGPoint?
     @Published var toolSize : CGFloat = 8
     @Published var toolColor : CGColor = UIColor.black.cgColor
