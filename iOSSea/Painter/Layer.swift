@@ -44,6 +44,17 @@ class Layer : ObservableObject {
         image = UIImage(cgImage: ctx.makeImage()!)
     }
     
+    convenience init(name: String, image: UIImage) {
+        let size = image.size
+        self.init(name: name, size: size)
+        
+        guard let cgImage = image.cgImage else { return }
+        ctx.draw(cgImage, in: CGRect(origin: .zero, size: size))
+        self.image = image
+    }
+
+    
+    
     func fill(color: CGColor) {
         ctx.setFillColor(color)
         ctx.fill(CGRect(origin: .zero, size: size))

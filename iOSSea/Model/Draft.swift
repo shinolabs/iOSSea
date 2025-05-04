@@ -7,11 +7,23 @@
 
 import Foundation
 import SwiftUI
+import CoreData
 
-struct Draft: Identifiable {
-    var id = UUID()
+class Draft: Identifiable {
+    var id: NSManagedObjectID?
     var image: UIImage
     var date: Date
+    
+    init(image: UIImage) {
+        self.image = image
+        date = Date()
+    }
+    
+    init(from: SavedDraft) {
+        id = from.objectID
+        image = UIImage(data: from.image!)!
+        date = from.lastChange!
+    }
     
     func dateAsString() -> String {
         let dateFormatter: DateFormatter = {

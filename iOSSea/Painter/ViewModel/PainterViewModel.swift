@@ -34,6 +34,17 @@ class PainterViewModel : ObservableObject {
         activeLayer!.fill(color: UIColor.white.cgColor)
         activeLayer!.rebuild()
     }
+    init(from layers: [Layer]) {
+        let color = CGColor(red: 0, green: 0, blue: 0, alpha: 255)
+        
+        tool = PenTool(size: 8, color: color)
+        toolColor = color
+        
+        self.layers = layers
+        let layer = layers.first(where: {layer in layer.active})
+        setActiveLayer(layer: layer ?? layers.first!)
+        activeLayer!.rebuild()
+    }
     
     func makeLayer(size: CGSize) -> Layer {
         let layer = Layer(name: "Layer #\(layers.count + 1)", size: size)

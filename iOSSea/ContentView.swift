@@ -25,7 +25,7 @@ struct ContentView: View {
                         .toolbarBackground(.visible, for: .automatic)
                         .toolbar {
                             if viewModel.isLoggedIn {
-                                NavigationLink(destination: PainterScreenView()) {
+                                NavigationLink(destination: DraftsPage()) {
                                     Image(systemName: "plus.square")
                                 } 
                             }
@@ -98,4 +98,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView().environmentObject(SettingsManager())
+        .environmentObject(DraftViewModel())
 }

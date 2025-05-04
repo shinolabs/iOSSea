@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23605" systemVersion="24D81" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="SavedDraft" representedClassName="SavedDraft" syncable="YES" codeGenerationType="class">
+        <attribute name="image" attributeType="Binary"/>
+        <attribute name="lastChange" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="toLayer" toMany="YES" deletionRule="Cascade" destinationEntity="SavedLayer" inverseName="toDraft" inverseEntity="SavedLayer"/>
+    </entity>
+    <entity name="SavedLayer" representedClassName="SavedLayer" syncable="YES" codeGenerationType="class">
+        <attribute name="active" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="layer" attributeType="Binary"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="order" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="toDraft" maxCount="1" deletionRule="Nullify" destinationEntity="SavedDraft" inverseName="toLayer" inverseEntity="SavedDraft"/>
+    </entity>
     <entity name="Setting" representedClassName="Setting" syncable="YES" codeGenerationType="class">
         <attribute name="key" attributeType="String"/>
         <attribute name="value" optional="YES" attributeType="String"/>

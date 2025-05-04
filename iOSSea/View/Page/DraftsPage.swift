@@ -13,7 +13,7 @@ struct DraftsPage: View {
         VStack {
             List {
                 ForEach(viewModel.drafts, id: \.id) {draft in
-                    NavigationLink(destination: PainterScreenView()) {
+                    NavigationLink(destination: PainterScreenView(draft: draft, layers: viewModel.getLayers(for: draft))) {
                         HStack {
                             Text("")
                             Image(uiImage: draft.image)
