@@ -15,11 +15,14 @@ struct iOSSeaApp: App {
         let urlCache = URLCache(memoryCapacity: memoryCapacity, diskCapacity: diskCapacity, diskPath: "myCache")
         URLCache.shared = urlCache
     }
+    let settingsManager = SettingsManager()
+    let draftViewModel = DraftViewModel()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(SettingsManager())
+                .environmentObject(settingsManager)
+                .environmentObject(draftViewModel)
                 .onOpenURL { url in
                     guard let host = url.host() else {
                         return
