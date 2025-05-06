@@ -40,7 +40,7 @@ struct PainterScreenView: View {
                             layers: viewModel.layers
                         )
                     }) {
-                        Image(systemName: "tray.and.arrow.down.fill")
+                        Image(systemName: "square.and.arrow.down.fill")
                     }
                     NavigationLink(destination: PainterMetadataView(viewModel: PainterMetadataViewModel(from: viewModel))) {
                         Image(systemName: "checkmark.square")
