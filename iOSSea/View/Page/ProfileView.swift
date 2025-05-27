@@ -89,8 +89,7 @@ struct ProfileView: View {
                 } else {
                     PostGridView(
                         posts:viewModel.posts,
-                        maxWidth: 160,
-                        reply: false
+                        maxWidth: 160
                     )
                 }
             }

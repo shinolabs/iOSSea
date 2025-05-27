@@ -10,7 +10,6 @@ import SwiftUI
 struct PostGridView: View {
     let posts: [Post]
     let maxWidth: CGFloat
-    let reply: Bool
     @State var width: CGFloat = 0
     @EnvironmentObject var settings: SettingsManager
     
@@ -21,18 +20,13 @@ struct PostGridView: View {
                 ForEach(posts, id: \.cid) { post in
                     if(!(post.nsfw && settings.hideNSFW)) {
                         NavigationLink(destination: {
-                            if(reply) {
-                                PostFromReplyView(rkey: post.at.components(separatedBy: "/").last ?? "", did: post.author.did)
-                                
-                            } else {
-                                PostPageView(post: post)
-                            }
+                            PostPageView(post: post)
                         }) {
                             let gridWidth = width / (ceil(width/maxWidth))
                             MiniPostView(post: post)
                                 .frame(
                                     width: gridWidth,
-                                    height: reply ? gridWidth/3 : gridWidth
+                                    height: gridWidth
                                 )
                                 .clipped(antialiased: true)
                         }
@@ -54,5 +48,5 @@ struct PostGridView: View {
 }
 
 #Preview {
-    PostGridView(posts: posts, maxWidth: 160, reply: false)
+    PostGridView(posts: posts, maxWidth: 160)
 }

@@ -74,6 +74,9 @@
     "Description" : {
 
     },
+    "Drafts" : {
+
+    },
     "Editor" : {
       "localizations" : {
         "pl" : {
@@ -176,6 +179,9 @@
           }
         }
       }
+    },
+    "No drafts saved! Create a new drawing with the button in the top right corner!" : {
+
     },
     "No image lol" : {
 
