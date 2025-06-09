@@ -5,7 +5,14 @@
 
     },
     "@%@" : {
-
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "@%@"
+          }
+        }
+      }
     },
     "@%@'s post" : {
       "localizations" : {
@@ -18,16 +25,44 @@
       }
     },
     "@handle.bsky.social" : {
-
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "@handle.bsky.social"
+          }
+        }
+      }
     },
     "#%@" : {
-
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "#%@"
+          }
+        }
+      }
     },
     "%@" : {
-
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        }
+      }
     },
     "%lld" : {
-
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
     },
     "Add new layer" : {
       "localizations" : {
@@ -40,10 +75,24 @@
       }
     },
     "Attaching a short description helps give context about your drawing. Optional." : {
-
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dodanie krótkiego opisu zapewni kontekst dla odbiorców. Opcjonalne"
+          }
+        }
+      }
     },
     "Auto" : {
-
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auto"
+          }
+        }
+      }
     },
     "Blur NSFW" : {
       "localizations" : {
@@ -56,7 +105,14 @@
       }
     },
     "Brush Size" : {
-
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rozmiar Pędzla"
+          }
+        }
+      }
     },
     "Close" : {
       "localizations" : {
@@ -69,13 +125,34 @@
       }
     },
     "Crosspost to Bluesky" : {
-
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zamieść na Bluesky"
+          }
+        }
+      }
     },
     "Description" : {
-
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opis"
+          }
+        }
+      }
     },
     "Drafts" : {
-
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Szkice"
+          }
+        }
+      }
     },
     "Editor" : {
       "localizations" : {
@@ -108,7 +185,14 @@
       }
     },
     "If checked, we'll automatically create a post for you on Bluesky with the image and a link to PinkSea attached." : {
-
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przy zaznaczeniu automatycznie utworzymy dla Ciebie post na Bluesky z rysunkiem i linkiem do PinkSea."
+          }
+        }
+      }
     },
     "In response to a post by" : {
       "localizations" : {
@@ -181,7 +265,14 @@
       }
     },
     "No drafts saved! Create a new drawing with the button in the top right corner!" : {
-
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brak zapisanych szkiców! Stwórz nowy rysunek klikając przycisk w prawym górnym rogu!"
+          }
+        }
+      }
     },
     "No image lol" : {
 
@@ -227,13 +318,34 @@
       }
     },
     "Please check if your post contains adult content such as nudity or highly suggestive themes." : {
-
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prosimy o zaznaczenie jeśli twój rysunek zawiera treści dla dorosłych (np. nagość lub dwuznaczne motywy). "
+          }
+        }
+      }
     },
     "Post" : {
-
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Post"
+          }
+        }
+      }
     },
     "Posting your artwork" : {
-
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Postowanie rysunku"
+          }
+        }
+      }
     },
     "Posts" : {
       "localizations" : {
@@ -297,7 +409,14 @@
       }
     },
     "Search for something" : {
-
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wyszukaj czegoś"
+          }
+        }
+      }
     },
     "Settings" : {
       "localizations" : {
@@ -310,7 +429,14 @@
       }
     },
     "Social" : {
-
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Media społecznościowe"
+          }
+        }
+      }
     },
     "Tags" : {
       "localizations" : {
